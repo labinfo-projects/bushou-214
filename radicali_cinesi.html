@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="it" class="h-full dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>214 Radicali Cinesi (Bushou)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        chinese: ['"Noto Serif SC"', 'serif'],
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="h-full bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Header -->
+    <header class="bg-white/95 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-800 shadow-sm sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center font-chinese text-xl font-bold shadow-md shadow-red-500/20">
+                    部
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">Bùshǒu 部首 214</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">I radicali del cinese mandarino (c)Giorgio Ruffa 2026 - Sviluppato con Google Canvas</p>
+                </div>
+            </div>
+
+            <!-- Nav Tabs -->
+            <div class="flex items-center space-x-2">
+                <button onclick="switchTab('learn')" id="tab-learn" class="px-3 py-1.5 text-sm font-medium rounded-lg bg-red-50 text-red-600 dark:bg-red-950/60 dark:text-red-400 transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span class="hidden sm:inline">Esplora</span>
+                </button>
+                <button onclick="switchTab('quiz')" id="tab-quiz" class="px-3 py-1.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-puzzle-piece"></i>
+                    <span class="hidden sm:inline">Quiz</span>
+                </button>
+                <button onclick="switchTab('favorites')" id="tab-favorites" class="px-3 py-1.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-star text-amber-500"></i>
+                    <span class="hidden sm:inline">Salvati</span>
+                    <span id="fav-badge" class="ml-1 px-1.5 py-0.2 text-xs bg-slate-200 dark:bg-slate-800 rounded-full">0</span>
+                </button>
+
+                <!-- Theme Toggle Button -->
+                <button onclick="toggleTheme()" id="theme-toggle-btn" title="Cambia tema chiaro/scuro" class="w-9 h-9 rounded-xl flex items-center justify-center text-slate-600 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 transition ml-1">
+                    <i id="theme-toggle-icon" class="fa-solid fa-sun text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 overflow-hidden flex flex-col">
+
+        <!-- ================= LEARN TAB ================= -->
+        <div id="view-learn" class="flex-1 flex flex-col h-full overflow-hidden">
+            <!-- Search and Filters Bar -->
+            <div class="bg-white dark:bg-slate-900/80 backdrop-blur p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm mb-6 flex flex-col md:flex-row gap-4 items-center justify-between">
+                <!-- Search Input -->
+                <div class="relative w-full md:w-80">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                        <i class="fa-solid fa-search"></i>
+                    </span>
+                    <input type="text" id="search-input" oninput="filterRadicals()" placeholder="Cerca per carattere, pinyin o significato..." 
+                        class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 transition">
+                </div>
+
+                <!-- Stroke Filter Dropdown -->
+                <div class="flex items-center space-x-3 w-full md:w-auto justify-between md:justify-end">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">Tratti:</span>
+                        <select id="stroke-filter" onchange="filterRadicals()" 
+                            class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 transition">
+                            <option value="all">Tutti (1-17)</option>
+                            <option value="1">1 tratto</option>
+                            <option value="2">2 tratti</option>
+                            <option value="3">3 tratti</option>
+                            <option value="4">4 tratti</option>
+                            <option value="5">5 tratti</option>
+                            <option value="6">6 tratti</option>
+                            <option value="7">7 tratti</option>
+                            <option value="8">8 tratti</option>
+                            <option value="9">9 tratti</option>
+                            <option value="10">10 tratti</option>
+                            <option value="11">11 tratti</option>
+                            <option value="12">12+ tratti</option>
+                        </select>
+                    </div>
+                    <div id="counter-display" class="text-xs font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                        Mostrati: <span id="visible-count">214</span>/214
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid Layout or Empty State -->
+            <div class="flex-1 overflow-y-auto pr-2" id="radicals-scroll-container">
+                <div id="radicals-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 pb-12">
+                    <!-- Cards will be populated dynamically -->
+                </div>
+                <div id="no-results" class="hidden flex flex-col items-center justify-center py-16 text-center">
+                    <i class="fa-solid fa-face-confused text-4xl text-slate-400 mb-3"></i>
+                    <p class="text-slate-600 dark:text-slate-400 font-medium">Nessun radicale trovato</p>
+                    <p class="text-xs text-slate-400 mt-1">Prova a modificare i filtri di ricerca</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= QUIZ TAB ================= -->
+        <div id="view-quiz" class="hidden flex-1 flex flex-col items-center justify-center max-w-xl mx-auto w-full">
+            <div id="quiz-start-screen" class="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-center w-full">
+                <div class="w-16 h-16 bg-red-100 dark:bg-red-950/60 text-red-600 dark:text-red-400 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h2 class="text-xl font-bold mb-2">Metti alla prova la tua memoria</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-6">Indovina il Pinyin e il significato dei 214 radicali in una serie di domande a scelta multipla.</p>
+                <button onclick="startQuiz()" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-xl shadow-lg shadow-red-500/25 transition">
+                    Inizia il Quiz
+                </button>
+            </div>
+
+            <div id="quiz-play-screen" class="hidden bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm w-full">
+                <div class="flex items-center justify-between mb-6">
+                    <span id="quiz-progress" class="text-xs font-semibold px-2.5 py-1 bg-slate-100 dark:bg-slate-800 rounded-lg text-slate-600 dark:text-slate-300">Domanda 1/10</span>
+                    <span id="quiz-score" class="text-xs font-semibold text-emerald-600 dark:text-emerald-400">Punteggio: 0</span>
+                </div>
+
+                <div class="text-center mb-8">
+                    <p class="text-xs text-slate-400 uppercase tracking-wider mb-2">Qual è il significato o pinyin di questo radicale?</p>
+                    <div id="quiz-char" class="font-chinese text-7xl font-bold text-red-600 dark:text-red-500 my-4">水</div>
+                    <div id="quiz-subinfo" class="text-sm font-medium text-slate-500 dark:text-slate-400">Tratti: 4</div>
+                </div>
+
+                <div id="quiz-options" class="grid grid-cols-1 gap-3">
+                    <!-- Options injected via JS -->
+                </div>
+            </div>
+
+            <div id="quiz-end-screen" class="hidden bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-center w-full">
+                <div class="w-16 h-16 bg-amber-100 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+                <h2 class="text-xl font-bold mb-1">Quiz Completato!</h2>
+                <p id="quiz-final-message" class="text-sm text-slate-500 dark:text-slate-400 mb-6">Hai completato tutte le domande con successo.</p>
+                <div class="text-4xl font-bold text-red-600 dark:text-red-400 mb-6" id="quiz-final-score">8/10</div>
+                <button onclick="startQuiz()" class="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-xl shadow-lg shadow-red-500/25 transition">
+                    Gioca di Nuovo
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= FAVORITES TAB ================= -->
+        <div id="view-favorites" class="hidden flex-1 flex flex-col h-full overflow-hidden">
+            <div class="bg-white dark:bg-slate-900/80 backdrop-blur p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm mb-6 flex items-center justify-between">
+                <div>
+                    <h2 class="font-bold text-base">Radicali Salvati</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">I tuoi radicali preferiti per un rapido ripasso.</p>
+                </div>
+                <button onclick="clearFavorites()" class="text-xs text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium px-3 py-1.5 rounded-lg border border-red-200 dark:border-red-900/60 transition">
+                    Svuota Preferiti
+                </button>
+            </div>
+            <div class="flex-1 overflow-y-auto pr-2">
+                <div id="favorites-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4 pb-12">
+                    <!-- Populated dynamically -->
+                </div>
+                <div id="no-favorites" class="hidden flex flex-col items-center justify-center py-16 text-center">
+                    <i class="fa-solid fa-star text-4xl text-slate-300 dark:text-slate-700 mb-3"></i>
+                    <p class="text-slate-600 dark:text-slate-400 font-medium">Nessun radicale salvato</p>
+                    <p class="text-xs text-slate-400 mt-1">Clicca sull'icona stella nelle schede per aggiungerli qui.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Detail Modal -->
+    <div id="detail-modal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl max-w-lg w-full p-6 sm:p-8 relative transform transition-all scale-95 opacity-0 duration-200" id="modal-content-box">
+            <button onclick="closeModal()" class="absolute top-5 right-5 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <div class="flex items-start space-x-6 mb-6">
+                <div class="w-24 h-24 rounded-2xl bg-red-50 dark:bg-red-950/50 border border-red-100 dark:border-red-900/80 flex items-center justify-center font-chinese text-6xl font-bold text-red-600 dark:text-red-400 shadow-inner flex-shrink-0" id="modal-char">
+                    水
+                </div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center space-x-2 mb-1">
+                        <span id="modal-num" class="text-xs font-semibold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-slate-600 dark:text-slate-300"># 85</span>
+                        <span id="modal-strokes" class="text-xs font-medium text-slate-500 dark:text-slate-400">4 tratti</span>
+                    </div>
+                    <h3 id="modal-meaning" class="text-xl font-bold text-slate-900 dark:text-white truncate">Acqua</h3>
+                    <p id="modal-pinyin" class="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400 tracking-wide mt-1">shuǐ</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 border-t border-slate-100 dark:border-slate-800 pt-4">
+                <div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400">Esempi di caratteri derivati</h4>
+                        <span class="text-[11px] text-slate-400 dark:text-slate-500 font-normal"><i class="fa-solid fa-volume-high text-[10px] mr-1 text-red-500"></i>Tocca per pronuncia</span>
+                    </div>
+                    <div id="modal-examples" class="flex flex-wrap gap-2.5">
+                        <!-- Examples tags -->
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1">Nota mnemonica / Descrizione</h4>
+                    <p id="modal-desc" class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                        Rappresenta un corso d'acqua con flussi centrali. Spesso posizionato a sinistra come 氵 (San Dian Shui).
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-8 flex items-center justify-between pt-4 border-t border-slate-100 dark:border-slate-800">
+                <button onclick="playAudioSimulation()" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-medium rounded-xl transition flex items-center space-x-2">
+                    <i class="fa-solid fa-volume-high text-red-600 dark:text-red-400"></i>
+                    <span>Ascolta Pinyin</span>
+                </button>
+                <button id="modal-fav-btn" onclick="toggleModalFavorite()" class="px-4 py-2 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 text-red-600 dark:text-red-400 text-sm font-medium rounded-xl transition flex items-center space-x-2">
+                    <i class="fa-solid fa-star"></i>
+                    <span id="modal-fav-text">Salva nei preferiti</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-3 rounded-xl shadow-xl transform translate-y-20 opacity-0 transition-all duration-300 text-sm font-medium flex items-center space-x-2">
+        <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600"></i>
+        <span id="toast-msg">Notifica</span>
+    </div>
+
+    <!-- Application Script -->
+    <script>
+        // Full Dataset of 214 Kangxi Radicals
+        const radicalsData = [
+            { id: 1, char: "一", pinyin: "yī", strokes: 1, meaning: "Uno / Orizzontale", examples: ["丁", "七", "万"], desc: "Rappresenta il numero uno o una linea orizzontale." },
+            { id: 2, char: "丨", pinyin: "gǔn", strokes: 1, meaning: "Linea verticale", examples: ["中", "丰", "串"], desc: "Rappresenta una linea verticale." },
+            { id: 3, char: "丶", pinyin: "zhǔ", strokes: 1, meaning: "Punto", examples: ["丸", "主", "丹"], desc: "Rappresenta un punto o una goccia." },
+            { id: 4, char: "丿", pinyin: "piě", strokes: 1, meaning: "Tratto obliquo a sinistra", examples: ["义", "之", "乎"], desc: "Un tratto diagonale che scende verso sinistra." },
+            { id: 5, char: "乙", pinyin: "yǐ", strokes: 1, meaning: "Secondo / Secondo celeste", examples: ["九", "乱", "乳"], desc: "Rappresenta il secondo carattere celeste o una curva." },
+            { id: 6, char: "亅", pinyin: "jué", strokes: 1, meaning: "Uncino", examples: ["了", "事", "予"], desc: "Un tratto verticale che termina con un piccolo uncino." },
+            { id: 7, char: "二", pinyin: "èr", strokes: 2, meaning: "Due", examples: ["于", "五", "井"], desc: "Rappresenta il numero due." },
+            { id: 8, char: "亠", pinyin: "tóu", strokes: 2, meaning: "Coperchio / Testa", examples: ["亡", "京", "高"], desc: "Spesso usato come tetto o copertura in alto." },
+            { id: 9, char: "人", pinyin: "rén", strokes: 2, meaning: "Uomo / Persona", examples: ["从", "众", "休"], desc: "Rappresenta una persona in piedi o che cammina." },
+            { id: 10, char: "儿", pinyin: "ér", strokes: 2, meaning: "Gambe / Figlio", examples: ["元", "兄", "光"], desc: "Spesso raffigura le gambe di una persona." },
+            { id: 11, char: "入", pinyin: "rù", strokes: 2, meaning: "Entrare", examples: ["内", "全", "两"], desc: "Significa entrare o penetrare." },
+            { id: 12, char: "八", pinyin: "bā", strokes: 2, meaning: "Otto", examples: ["分", "公", "共"], desc: "Rappresenta il numero otto o divisione." },
+            { id: 13, char: "冂", pinyin: "jiōng", strokes: 2, meaning: "Bordo / Confine / Distretto", examples: ["冋", "册", "再"], desc: "Rappresenta i confini di un'area o una struttura quadrata aperta in basso." },
+            { id: 14, char: "冖", pinyin: "mì", strokes: 2, meaning: "Copertura / Tetto", examples: ["写", "军", "冠"], desc: "Rappresenta un panno o un copricapo." },
+            { id: 15, char: "冫", pinyin: "bīng", strokes: 2, meaning: "Ghiaccio", examples: ["冻", "冷", "冰"], desc: "Rappresenta il ghiaccio o il freddo intenso." },
+            { id: 16, char: "几", pinyin: "jī", strokes: 2, meaning: "Tavolino / Piccolo tavolo", examples: ["凡", "凭", "凤"], desc: "Rappresenta un piccolo tavolo o sgabello." },
+            { id: 17, char: "凵", pinyin: "qiǎn", strokes: 2, meaning: "Contenitore / Fossa", examples: ["凶", "凹", "凸"], desc: "Rappresenta una bocca aperta o un recipiente." },
+            { id: 18, char: "刀", pinyin: "dāo", strokes: 2, meaning: "Coltello / Spada", examples: ["分", "切", "初"], desc: "Rappresenta un coltello o una lama." },
+            { id: 19, char: "力", pinyin: "lì", strokes: 2, meaning: "Forza / Potenza", examples: ["动", "务", "勉"], desc: "Rappresenta la forza fisica o muscolare." },
+            { id: 20, char: "勹", pinyin: "bāo", strokes: 2, meaning: "Avvolgere / Incartare", examples: ["包", "匆", "匍"], desc: "Rappresenta una persona che avvolge o protegge qualcosa." },
+            { id: 21, char: "匕", pinyin: "bǐ", strokes: 2, meaning: "Cucchiaio / Pugnale", examples: ["匙", "北", "化"], desc: "Rappresenta un cucchiaio o un pugnale corto." },
+            { id: 22, char: "匚", pinyin: "fāng", strokes: 2, meaning: "Scatola / Cassa", examples: ["匣", "汇", "医"], desc: "Rappresenta una scatola o un cassetto aperto." },
+            { id: 23, char: "匸", pinyin: "xì", strokes: 2, meaning: "Nascondere / Cassa", examples: ["区", "匹", "医"], desc: "Rappresenta un contenitore per nascondere oggetti." },
+            { id: 24, char: "十", pinyin: "shí", strokes: 2, meaning: "Dieci", examples: ["千", "升", "午"], desc: "Rappresenta il numero dieci e la completezza." },
+            { id: 25, char: "卜", pinyin: "bǔ", strokes: 2, meaning: "Divinazione", examples: ["占", "卦", "卡"], desc: "Rappresenta le crepe nelle ossa oracolari usate per la divinazione." },
+            { id: 26, char: "卩", pinyin: "jié", strokes: 2, meaning: "Sigillo / Ginocchio", examples: ["印", "危", "卵"], desc: "Rappresenta una persona in ginocchio." },
+            { id: 27, char: "厂", pinyin: "chǎng", strokes: 2, meaning: "Rupe / Fabbrica", examples: ["厄", "历", "厚"], desc: "Rappresenta una scogliera o un rifugio roccioso." },
+            { id: 28, char: "厶", pinyin: "sī", strokes: 2, meaning: "Privato / Segreto", examples: ["去", "县", "参"], desc: "Significa privato o egoista." },
+            { id: 29, char: "又", pinyin: "yòu", strokes: 2, meaning: "Di nuovo / Mano destra", examples: ["友", "发", "取"], desc: "Rappresenta la mano destra e azioni ripetute." },
+            { id: 30, char: "口", pinyin: "kǒu", strokes: 3, meaning: "Bocca", examples: ["吃", "问", "听"], desc: "Rappresenta una bocca aperta." },
+            { id: 31, char: "囗", pinyin: "wéi", strokes: 3, meaning: "Recinto / Confine", examples: ["国", "圆", "园"], desc: "Rappresenta un recinto o una cinta muraria." },
+            { id: 32, char: "土", pinyin: "tǔ", strokes: 3, meaning: "Terra / Suolo", examples: ["地", "坐", "城"], desc: "Rappresenta la terra o il terreno fertile." },
+            { id: 33, char: "士", pinyin: "shì", strokes: 3, meaning: "Erudito / Accademico", examples: ["声", "壳", "壶"], desc: "Rappresenta un ufficiale, studioso o guerriero." },
+            { id: 34, char: "夂", pinyin: "zhǐ", strokes: 3, meaning: "Andare / Seguire", examples: ["各", "备", "处"], desc: "Rappresenta un piede che cammina lentamente." },
+            { id: 35, char: "夊", pinyin: "suī", strokes: 3, meaning: "Camminare lentamente", examples: ["复", "夏", "夔"], desc: "Rappresenta passi lenti o camminare con esitazione." },
+            { id: 36, char: "夕", pinyin: "xī", strokes: 3, meaning: "Sera / Notte", examples: ["外", "多", "夜"], desc: "Rappresenta la luna al tramonto o la sera." },
+            { id: 37, char: "大", pinyin: "dà", strokes: 3, meaning: "Grande", examples: ["天", "太", "夫"], desc: "Rappresenta una persona con braccia e gambe aperte per sembrare grande." },
+            { id: 38, char: "女", pinyin: "nǚ", strokes: 3, meaning: "Donna / Femmina", examples: ["妈", "好", "如"], desc: "Rappresenta una donna inginocchiata." },
+            { id: 39, char: "子", pinyin: "zǐ", strokes: 3, meaning: "Figlio / Bambino", examples: ["字", "孔", "存"], desc: "Rappresenta un neonato o un bambino." },
+            { id: 40, char: "宀", pinyin: "mián", strokes: 3, meaning: "Tetto / Edificio", examples: ["家", "安", "字"], desc: "Rappresenta un tetto con fondamenta." },
+            { id: 41, char: "寸", pinyin: "cùn", strokes: 3, meaning: "Pollice / Unità di misura", examples: ["封", "导", "射"], desc: "Rappresenta il polso umano dove si misura il battito." },
+            { id: 42, char: "小", pinyin: "xiǎo", strokes: 3, meaning: "Piccolo", examples: ["少", "尖", "尘"], desc: "Rappresenta qualcosa diviso in parti piccole." },
+            { id: 43, char: "尢", pinyin: "wāng", strokes: 3, meaning: "Zoppo", examples: ["尤", "就", "尬"], desc: "Rappresenta una persona con una gamba zoppa." },
+            { id: 44, char: "尸", pinyin: "shī", strokes: 3, meaning: "Cadavere / Corpo", examples: ["局", "层", "居"], desc: "Rappresenta il corpo umano o una persona seduta." },
+            { id: 45, char: "屮", pinyin: "chè", strokes: 3, meaning: "Germoglio / Erba", examples: ["屯", "屰", "㞢"], desc: "Rappresenta un germoglio che spunta dalla terra." },
+            { id: 46, char: "山", pinyin: "shān", strokes: 3, meaning: "Montagna", examples: ["岁", "岩", "岛"], desc: "Rappresenta le cime di una catena montuosa." },
+            { id: 47, char: "巛", pinyin: "chuān", strokes: 3, meaning: "Fiume / Torrente", examples: ["川", "州", "顺"], desc: "Rappresenta le correnti d'acqua di un fiume." },
+            { id: 48, char: "工", pinyin: "gōng", strokes: 3, meaning: "Lavoro / Attrezzo", examples: ["左", "巧", "巨"], desc: "Rappresenta un righello o un attrezzo da carpentiere." },
+            { id: 49, char: "己", pinyin: "jǐ", strokes: 3, meaning: "Se stesso", examples: ["已", "巴", "巷"], desc: "Rappresenta il pronome 'sé stesso'." },
+            { id: 50, char: "巾", pinyin: "jīn", strokes: 3, meaning: "Telo / Asciugamano", examples: ["市", "布", "带"], desc: "Rappresenta un panno appeso o un asciugamano." },
+            { id: 51, char: "干", pinyin: "gān", strokes: 3, meaning: "Secco / Tronco", examples: ["平", "年", "并"], desc: "Rappresenta un tronco d'albero o qualcosa di secco." },
+            { id: 52, char: "幺", pinyin: "yāo", strokes: 3, meaning: "Minuscolo / Primo", examples: ["幻", "幽", "㡭"], desc: "Rappresenta qualcosa di molto piccolo o il numero uno nei dadi." },
+            { id: 53, char: "广", pinyin: "guǎng", strokes: 3, meaning: "Edificio / Capannone", examples: ["床", "库", "店"], desc: "Rappresenta una struttura aperta su un lato o un riparo." },
+            { id: 54, char: "廴", pinyin: "yǐn", strokes: 3, meaning: "Camminare a grandi passi", examples: ["延", "建", "廷"], desc: "Rappresenta il movimento e il camminare." },
+            { id: 55, char: "廾", pinyin: "gǒng", strokes: 3, meaning: "Mani congiunte", examples: ["弄", "弈", "算"], desc: "Rappresenta due mani che tengono qualcosa insieme." },
+            { id: 56, char: "弋", pinyin: "yì", strokes: 3, meaning: "Freccia con corda", examples: ["式", "弑", "㢠"], desc: "Rappresenta una freccia legata a una corda per cacciare volatili." },
+            { id: 57, char: "弓", pinyin: "gōng", strokes: 3, meaning: "Arco", examples: ["张", "强", "弹"], desc: "Rappresenta un arco da tiro con l'arco." },
+            { id: 58, char: "彐", pinyin: "jì", strokes: 3, meaning: "Testa di tasso / Muso", examples: ["彑", "录", "彗"], desc: "Rappresenta il muso di un animale." },
+            { id: 59, char: "彡", pinyin: "shān", strokes: 3, meaning: "Setole / Piume / Raggi", examples: ["形", "彦", "彩"], desc: "Rappresenta peli fini, piume o raggi di luce decorativi." },
+            { id: 60, char: "彳", pinyin: "chì", strokes: 3, meaning: "Passo a sinistra", examples: ["很", "得", "往"], desc: "Rappresenta il passo del piede sinistro." },
+            { id: 61, char: "心", pinyin: "xīn", strokes: 4, meaning: "Cuore / Mente", examples: ["想", "情", "志"], desc: "Rappresenta il cuore umano, sede delle emozioni e del pensiero." },
+            { id: 62, char: "戈", pinyin: "gē", strokes: 4, meaning: "Alabarda / Arma", examples: ["战", "我", "成"], desc: "Rappresenta un'arma antica simile a un'alabarda." },
+            { id: 63, char: "戶", pinyin: "hù", strokes: 4, meaning: "Porta ad un'anta", examples: ["房", "所", "扁"], desc: "Rappresenta una porta a un battente." },
+            { id: 64, char: "手", pinyin: "shǒu", strokes: 4, meaning: "Mano", examples: ["打", "找", "指"], desc: "Rappresenta la mano aperta con le dita." },
+            { id: 65, char: "支", pinyin: "zhī", strokes: 4, meaning: "Ramo / Sostegno", examples: ["翅", "攱", "㩗"], desc: "Rappresenta un ramo d'albero usato come sostegno." },
+            { id: 66, char: "攴", pinyin: "pū", strokes: 4, meaning: "Colpire leggermente / Bastone", examples: ["收", "攻", "改"], desc: "Rappresenta una mano che tiene un bastoncino per colpire." },
+            { id: 67, char: "文", pinyin: "wén", strokes: 4, meaning: "Scrittura / Cultura", examples: ["刘", "齐", "斋"], desc: "Rappresenta modelli intrecciati, caratteri o letteratura." },
+            { id: 68, char: "斗", pinyin: "dǒu", strokes: 4, meaning: "Mestolo / Unità di misura", examples: ["料", "斜", "斡"], desc: "Rappresenta un recipiente per misurare cereali." },
+            { id: 69, char: "斤", pinyin: "jīn", strokes: 4, meaning: "Ascia / Catty", examples: ["斥", "斧", "斩"], desc: "Rappresenta un'ascia da boscaiolo." },
+            { id: 70, char: "方", pinyin: "fāng", strokes: 4, meaning: "Quadrato / Direzione", examples: ["放", "旗", "旅"], desc: "Rappresenta una zattera o oggetti quadrati allineati." },
+            { id: 71, char: "无", pinyin: "wú", strokes: 4, meaning: "Non avere / Nulla", examples: ["既", "旡", "既"], desc: "Significa non esserci, assenza o nulla." },
+            { id: 72, char: "日", pinyin: "rì", strokes: 4, meaning: "Sole / Giorno", examples: ["明", "早", "时"], desc: "Rappresenta il disco solare con un punto centrale." },
+            { id: 73, char: "曰", pinyin: "yuē", strokes: 4, meaning: "Dire / Parlare", examples: ["曲", "更", "曹"], desc: "Rappresenta la bocca che parla o emette parole." },
+            { id: 74, char: "月", pinyin: "yuè", strokes: 4, meaning: "Luna / Mese / Carne", examples: ["有", "朋", "期"], desc: "Rappresenta la falce di luna o la carne." },
+            { id: 75, char: "木", pinyin: "mù", strokes: 4, meaning: "Albero / Legno", examples: ["林", "森", "树"], desc: "Rappresenta un albero con radici e rami." },
+            { id: 76, char: "欠", pinyin: "qiàn", strokes: 4, meaning: "Sbadigliare / Mancare", examples: ["歌", "欢", "欲"], desc: "Rappresenta una persona che sbadiglia o apre la bocca." },
+            { id: 77, char: "止", pinyin: "zhǐ", strokes: 4, meaning: "Fermarsi / Piede", examples: ["步", "此", "正"], desc: "Rappresenta un piede fermo sul terreno." },
+            { id: 78, char: "歹", pinyin: "dǎi", strokes: 4, meaning: "Morte / Cattivo", examples: ["死", "歼", "残"], desc: "Rappresenta le ossa di un cadavere o rovina." },
+            { id: 79, char: "殳", pinyin: "shū", strokes: 4, meaning: "Lancia / Arma d'asta", examples: ["段", "殷", "毅"], desc: "Rappresenta un'arma lunga o un bastone d'arma." },
+            { id: 80, char: "毋", pinyin: "wú", strokes: 4, meaning: "Non / Vietato", examples: ["母", "每", "毒"], desc: "Significa divieto o 'non fare'." },
+            { id: 81, char: "比", pinyin: "bǐ", strokes: 4, meaning: "Confrontare / Paragonare", examples: ["皆", "毙", "毛"], desc: "Rappresenta due persone vicine messe a confronto." },
+            { id: 82, char: "毛", pinyin: "máo", strokes: 4, meaning: "Pelo / Piuma / Lana", examples: ["毫", "毡", "毯"], desc: "Rappresenta peli, pelliccia o piume di animali." },
+            { id: 83, char: "氏", pinyin: "shì", strokes: 4, meaning: "Clan / Famiglia", examples: ["民", "纸", "婚"], desc: "Rappresenta una radice o un clan familiare." },
+            { id: 84, char: "气", pinyin: "qì", strokes: 4, meaning: "Vapore / Gas / Energia", examples: ["氛", "氢", "氧"], desc: "Rappresenta vapori o nubi che si alzano." },
+            { id: 85, char: "水", pinyin: "shuǐ", strokes: 4, meaning: "Acqua", examples: ["洗", "河", "湖"], desc: "Rappresenta un flusso d'acqua corrente." },
+            { id: 86, char: "火", pinyin: "huǒ", strokes: 4, meaning: "Fuoco", examples: ["灯", "烧", "烤"], desc: "Rappresenta le fiamme di un fuoco ardente." },
+            { id: 87, char: "爪", pinyin: "zhǎo", strokes: 4, meaning: "Artiglio / Unghia", examples: ["爬", "爱", "爵"], desc: "Rappresenta artigli o mani rivolte verso il basso." },
+            { id: 88, char: "父", pinyin: "fù", strokes: 4, meaning: "Padre", examples: ["爷", "爸", "斧"], desc: "Rappresenta un padre che tiene un bastone di comando." },
+            { id: 89, char: "爻", pinyin: "yáo", strokes: 4, meaning: "Linee dell'I Ching", examples: ["爽", "㸚", "㸛"], desc: "Rappresenta l'interazione delle forze cosmiche (Yin e Yang)." },
+            { id: 90, char: "爿", pinyin: "qiáng", strokes: 4, meaning: "Letto di legno diviso", examples: ["牀", "牁", "牂"], desc: "Rappresenta un letto di legno o pannelli." },
+            { id: 91, char: "片", pinyin: "piàn", strokes: 4, meaning: "Fetta / Sottile", examples: ["版", "牌", "牍"], desc: "Rappresenta un pezzo di legno tagliato a fettina sottile." },
+            { id: 92, char: "牙", pinyin: "yá", strokes: 4, meaning: "Dente", examples: ["牙", "-", "㸡"], desc: "Rappresenta i denti o le zanne di un animale." },
+            { id: 93, char: "牛", pinyin: "niú", strokes: 4, meaning: "Bue / Mucca", examples: ["特", "物", "牧"], desc: "Rappresenta la testa e le corna di un bue." },
+            { id: 94, char: "犬", pinyin: "quǎn", strokes: 4, meaning: "Cane", examples: ["猫", "独", "犯"], desc: "Rappresenta un cane con la coda ricurva." },
+            { id: 95, char: "王", pinyin: "wáng", strokes: 4, meaning: "Re / Giada (Jīn)", examples: ["玩", "珍", "珠"], desc: "Rappresenta il re o, come radicale laterale, la giada." },
+            { id: 96, char: "玄", pinyin: "xuán", strokes: 5, meaning: "Profondo / Misterioso", examples: ["率", "玅", "兹"], desc: "Rappresenta il colore nero profondo o il mistero." },
+            { id: 97, char: "玉", pinyin: "yù", strokes: 5, meaning: "Giada", examples: ["国", "宝", "现"], desc: "Rappresenta pietre preziose o giada infilata." },
+            { id: 98, char: "瓜", pinyin: "guā", strokes: 5, meaning: "Melone / Zucca", examples: ["瓣", "瓠", "瓢"], desc: "Rappresenta un melone che cresce sulla pianta." },
+            { id: 99, char: "瓦", pinyin: "wǎ", strokes: 5, meaning: "Tegola / Ceramica", examples: ["瓶", "瓷", "瓮"], desc: "Rappresenta una tegola di terracotta cotta." },
+            { id: 100, char: "甘", pinyin: "gān", strokes: 5, meaning: "Dolce", examples: ["甜", "甚", "苷"], desc: "Rappresenta qualcosa di dolce in bocca." },
+            { id: 101, char: "生", pinyin: "shēng", strokes: 5, meaning: "Nascere / Vita", examples: ["性", "甥", "甦"], desc: "Rappresenta una pianta che spunta dalla terra." },
+            { id: 102, char: "用", pinyin: "yòng", strokes: 5, meaning: "Usare / Utilità", examples: ["甩", "甪", "甭"], desc: "Rappresenta uno strumento di utilità o un secchio." },
+            { id: 103, char: "田", pinyin: "tián", strokes: 5, meaning: "Campo coltivato", examples: ["男", "界", "思"], desc: "Rappresenta un campo agricolo diviso in appezzamenti." },
+            { id: 104, char: "疋", pinyin: "pǐ", strokes: 5, meaning: "Rotolo di stoffa / Piede", examples: ["疏", "疑", "疌"], desc: "Rappresenta un rotolo di tessuto o la misura di stoffa." },
+            { id: 105, char: "疒", pinyin: "nè", strokes: 5, meaning: "Malattia / Letto di malato", examples: ["病", "疼", "痛"], desc: "Rappresenta una persona malata a letto che suda." },
+            { id: 106, char: "癶", pinyin: "bō", strokes: 5, meaning: "Passi divergenti", examples: ["登", "癸", "発"], desc: "Rappresenta due piedi che camminano in direzioni opposte." },
+            { id: 107, char: "白", pinyin: "bái", strokes: 5, meaning: "Bianco / Chiaro", examples: ["的", "百", "皆"], desc: "Rappresenta il sole nascente o il colore bianco." },
+            { id: 108, char: "皮", pinyin: "pí", strokes: 5, meaning: "Pelle / Cuoio", examples: ["坡", "皱", "被"], desc: "Rappresenta la pelle strappata da un animale." },
+            { id: 109, char: "皿", pinyin: "mǐn", strokes: 5, meaning: "Piatto / Recipiente", examples: ["盆", "盘", "盏"], desc: "Rappresenta un piatto o una ciotola di ceramica." },
+            { id: 110, char: "矛", pinyin: "máo", strokes: 5, meaning: "Lancia / Speer", examples: ["矜", "矞", "㞺"], desc: "Rappresenta un'antica lancia da combattimento." },
+            { id: 111, char: "矢", pinyin: "shǐ", strokes: 5, meaning: "Freccia", examples: ["短", "矫", "知"], desc: "Rappresenta una freccia pronta sull'arco." },
+            { id: 112, char: "石", pinyin: "shí", strokes: 5, meaning: "Pietra / Roccia", examples: ["码", "砂", "硬"], desc: "Rappresenta una pietra sotto una scogliera." },
+            { id: 113, char: "示", pinyin: "shì", strokes: 5, meaning: "Mostrare / Altare / Spirito", examples: ["礼", "社", "祖"], desc: "Rappresenta un tavolo per offerte sacre agli dei." },
+            { id: 114, char: "禸", pinyin: "róu", strokes: 5, meaning: "Impronta di animale", examples: ["离", "禽", "禹"], desc: "Rappresenta le tracce lasciate da zampe di animali." },
+            { id: 115, char: "禾", pinyin: "hé", strokes: 5, meaning: "Cereale / Pianta di riso", examples: ["秋", "和", "种"], desc: "Rappresenta una pianta di grano o riso carica di spighe." },
+            { id: 116, char: "穴", pinyin: "xué", strokes: 5, meaning: "Grotta / Buco", examples: ["空", "穿", "究"], desc: "Rappresenta l'ingresso di una caverna o tana." },
+            { id: 117, char: "立", pinyin: "lì", strokes: 5, meaning: "Stare in piedi / Erigere", examples: ["站", "童", "端"], desc: "Rappresenta una persona in piedi sul terreno." },
+            { id: 118, char: "竹", pinyin: "zhú", strokes: 6, meaning: "Bambù", examples: ["笑", "笔", "算"], desc: "Rappresenta steli e foglie di bambù." },
+            { id: 119, char: "米", pinyin: "mǐ", strokes: 6, meaning: "Riso / Chicchi", examples: ["粉", "粒", "粗"], desc: "Rappresenta i chicchi di riso sparsi." },
+            { id: 120, char: "糸", pinyin: "mì", strokes: 6, meaning: "Seta / Filo", examples: ["红", "绿", "纸"], desc: "Rappresenta fili di seta aggrovigliati o matasse." },
+            { id: 121, char: "缶", pinyin: "fǒu", strokes: 6, meaning: "Giara di terracotta", examples: ["缸", "缺", "罂"], desc: "Rappresenta un vaso di terracotta per liquidi o percussioni." },
+            { id: 122, char: "网", pinyin: "wǎng", strokes: 6, meaning: "Rete", examples: ["罗", "罚", "罢"], desc: "Rappresenta una rete da pesca o per catturare uccelli." },
+            { id: 123, char: "羊", pinyin: "yáng", strokes: 6, meaning: "Pecora / Capra", examples: ["美", "群", "着"], desc: "Rappresenta la testa e le corna di una pecora." },
+            { id: 124, char: "羽", pinyin: "yǔ", strokes: 6, meaning: "Piuma / Ala", examples: ["习", "翻", "翔"], desc: "Rappresenta due penne o ali d'uccello." },
+            { id: 125, char: "老", pinyin: "lǎo", strokes: 6, meaning: "Vecchio / Anziano", examples: ["考", "者", "耆"], desc: "Rappresenta un anziano con i capelli lunghi che si appoggia a un bastone." },
+            { id: 126, char: "而", pinyin: "ér", strokes: 6, meaning: "E / Eppure", examples: ["耐", "耍", "耑"], desc: "Rappresenta i peli della barba sul mento." },
+            { id: 127, char: "耒", pinyin: "lěi", strokes: 6, meaning: "Aratro", examples: ["耕", "耘", "耙"], desc: "Rappresenta un aratro agricolo tradizionale." },
+            { id: 128, char: "耳", pinyin: "ěr", strokes: 6, meaning: "Orecchio", examples: ["闻", "聊", "聪"], desc: "Rappresenta la forma di un orecchio umano." },
+            { id: 129, char: "聿", pinyin: "yù", strokes: 6, meaning: "Pennello da scrittura", examples: ["肃", "肄", "肇"], desc: "Rappresenta una mano che tiene un pennello calligrafico." },
+            { id: 130, char: "肉", pinyin: "ròu", strokes: 6, meaning: "Carne / Ciccia", examples: ["腐", "肠", "肚"], desc: "Rappresenta pezzi di carne tagliati." },
+            { id: 131, char: "臣", pinyin: "chén", strokes: 6, meaning: "Ministro / Suddito", examples: ["姬", "卧", "臧"], desc: "Rappresenta un occhio sgranato di un servo sottomesso." },
+            { id: 132, char: "自", pinyin: "zì", strokes: 6, meaning: "Se stesso / Da", examples: ["臭", "臬", "臞"], desc: "Rappresenta il naso umano (in cinese si indica il naso per dire 'sé stessi')." },
+            { id: 133, char: "至", pinyin: "zhì", strokes: 6, meaning: "Arrivare / Giungere", examples: ["到", "致", "臺"], desc: "Rappresenta una freccia che colpisce il bersaglio a terra." },
+            { id: 134, char: "臼", pinyin: "jiù", strokes: 6, meaning: "Mortaio", examples: ["舂", "舅", "舁"], desc: "Rappresenta un mortaio di pietra per macinare." },
+            { id: 135, char: "舌", pinyin: "shé", strokes: 6, meaning: "Lingua", examples: ["甜", "舔", "舐"], desc: "Rappresenta una lingua che sporge dalla bocca." },
+            { id: 136, char: "舛", pinyin: "chuǎn", strokes: 6, meaning: "Opposto / Discrepanza", examples: ["舜", "舝", "舜"], desc: "Rappresenta due piedi che vanno in direzioni contrarie." },
+            { id: 137, char: "舟", pinyin: "zhōu", strokes: 6, meaning: "Barca / Nave", examples: ["航", "船", "舲"], desc: "Rappresenta una canoa o imbarcazione vista dall'alto." },
+            { id: 138, char: "艮", pinyin: "gèn", strokes: 6, meaning: "Fermo / Ottavo trigramma", examples: ["艰", "良", "垦"], desc: "Rappresenta un occhio che guarda fisso, fermezza." },
+            { id: 139, char: "色", pinyin: "sè", strokes: 6, meaning: "Colore / Espressione", examples: ["艳", "艴", "艵"], desc: "Rappresenta l'espressione del viso o il piacere." },
+            { id: 140, char: "艹", pinyin: "cǎo", strokes: 6, meaning: "Erba / Piante", examples: ["花", "草", "茶"], desc: "Rappresenta fili d'erba che germogliano in alto." },
+            { id: 141, char: "虍", pinyin: "hū", strokes: 6, meaning: "Pelle di tigre / Tigre", examples: ["虎", "虐", "彪"], desc: "Rappresenta le strisce e la pelle di una tigre." },
+            { id: 142, char: "虫", pinyin: "chóng", strokes: 6, meaning: "Insetto / Verme", examples: ["蚂", "蚁", "蛇"], desc: "Rappresenta un serpente o un insetto strisciante." },
+            { id: 143, char: "血", pinyin: "xiě", strokes: 6, meaning: "Sangue", examples: ["众", "衄", "衅"], desc: "Rappresenta una ciotola con gocce di sangue sacrificale." },
+            { id: 144, char: "行", pinyin: "xíng", strokes: 6, meaning: "Camminare / Andare", examples: ["街", "衙", "衍"], desc: "Rappresenta un incrocio stradale." },
+            { id: 145, char: "衣", pinyin: "yī", strokes: 6, meaning: "Vestito / Abito", examples: ["被", "初", "衬"], desc: "Rappresenta un indumento o una giacca." },
+            { id: 146, char: "襾", pinyin: "yà", strokes: 6, meaning: "Coprire / Occultare", examples: ["西", "覃", "覆"], desc: "Rappresenta una copertura o un coperchio." },
+            { id: 147, char: "見", pinyin: "jiàn", strokes: 7, meaning: "Vedere / Incontrare", examples: ["观", "规", "觉"], desc: "Rappresenta un occhio su un corpo umano." },
+            { id: 148, char: "角", pinyin: "jiǎo", strokes: 7, meaning: "Corno / Angolo", examples: ["解", "触", "觥"], desc: "Rappresenta il corno di un animale." },
+            { id: 149, char: "言", pinyin: "yán", strokes: 7, meaning: "Parola / Parlare", examples: ["说", "话", "语"], desc: "Rappresenta parole che escono dalla bocca." },
+            { id: 150, char: "谷", pinyin: "gǔ", strokes: 7, meaning: "Valle", examples: ["欲", "谿", "谸"], desc: "Rappresenta un torrente che scorre in una valle montana." },
+            { id: 151, char: "豆", pinyin: "dòu", strokes: 7, meaning: "Fagiolo / Legume", examples: ["逗", "短", "豌"], desc: "Rappresenta un antico recipiente per offerte pieno di fagioli." },
+            { id: 152, char: "豕", pinyin: "shǐ", strokes: 7, meaning: "Maiale / Porco", examples: ["家", "象", "豚"], desc: "Rappresenta un maiale con la coda." },
+            { id: 153, char: "豸", pinyin: "zhì", strokes: 7, meaning: "Animale feroce / Gatto selvatico", examples: ["豹", "豺", "貌"], desc: "Rappresenta una bestia feroce con la schiena arcuata." },
+            { id: 154, char: "貝", pinyin: "bèi", strokes: 7, meaning: "Conchiglia / Denaro", examples: ["财", "购", "货"], desc: "Rappresenta una conchiglia usata anticamente come moneta." },
+            { id: 155, char: "赤", pinyin: "chì", strokes: 7, meaning: "Rosso / Scarlatto", examples: ["赦", "赧", "赪"], desc: "Rappresenta il fuoco e il colore rosso vivo." },
+            { id: 156, char: "走", pinyin: "zǒu", strokes: 7, meaning: "Correre / Camminare", examples: ["赶", "起", "超"], desc: "Rappresenta una persona che corre gesticolando." },
+            { id: 157, char: "足", pinyin: "zú", strokes: 7, meaning: "Piede / Abbondante", examples: ["跑", "跳", "路"], desc: "Rappresenta la gamba e il piede umano." },
+            { id: 158, char: "身", pinyin: "shēn", strokes: 7, meaning: "Corpo / Persona", examples: ["射", "躲", "躯"], desc: "Rappresenta il corpo di una persona gravida." },
+            { id: 159, char: "车", pinyin: "chē", strokes: 7, meaning: "Veicolo / Carro", examples: ["辆", "输", "转"], desc: "Rappresenta un carro con ruote visto dall'alto." },
+            { id: 160, char: "辛", pinyin: "xīn", strokes: 7, meaning: "Aspro / Speziato / Faticoso", examples: ["辣", "辞", "辨"], desc: "Rappresenta un punteruolo o un attrezzo da taglio doloroso." },
+            { id: 161, char: "辰", pinyin: "chén", strokes: 7, meaning: "Mattino / Drago / Ora", examples: ["辱", "农", "辴"], desc: "Rappresenta conchiglie e attrezzi agricoli nel fango." },
+            { id: 162, char: "辵", pinyin: "chuò", strokes: 7, meaning: "Camminare / Movimento", examples: ["这", "边", "远"], desc: "Rappresenta il movimento lungo la strada (spesso scritto 辶)." },
+            { id: 163, char: "邑", pinyin: "yì", strokes: 7, meaning: "Città / Distretto", examples: ["都", "部", "邮"], desc: "Rappresenta un insediamento umano fortificato (spesso come 阝 a destra)." },
+            { id: 164, char: "酉", pinyin: "yǒu", strokes: 7, meaning: "Vino / Alcol / Giara", examples: ["酒", "醉", "醒"], desc: "Rappresenta un vaso pieno di vino fermentato." },
+            { id: 165, char: "釆", pinyin: "biàn", strokes: 7, meaning: "Distinguere / Separare", examples: ["釉", "释", "粃"], desc: "Rappresenta le zampe che dividono i grani di riso." },
+            { id: 166, char: "里", pinyin: "lǐ", strokes: 7, meaning: "Villaggio / Miglio cinese", examples: ["重", "野", "量"], desc: "Rappresenta campi coltivati vicino a case." },
+            { id: 167, char: "金", pinyin: "jīn", strokes: 8, meaning: "Metallo / Oro", examples: ["钱", "银", "钟"], desc: "Rappresenta minerali preziosi nascosti sottoterra." },
+            { id: 168, char: "长", pinyin: "cháng", strokes: 8, meaning: "Lungo / Crescere", examples: ["镜", "長", "镫"], desc: "Rappresenta una persona con i capelli lunghi." },
+            { id: 169, char: "门", pinyin: "mén", strokes: 8, meaning: "Porta / Ingresso", examples: ["问", "间", "闭"], desc: "Rappresenta i due battenti di una porta d'ingresso." },
+            { id: 170, char: "阜", pinyin: "fù", strokes: 8, meaning: "Colle / Argine", examples: ["防", "院", "阻"], desc: "Rappresenta gradini di terra o una collina (spesso come 阝 a sinistra)." },
+            { id: 171, char: "隶", pinyin: "lì", strokes: 8, meaning: "Schiavo / Catturare", examples: ["逮", "隶", "隷"], desc: "Rappresenta una mano che afferra una persona per i capelli." },
+            { id: 172, char: "隹", pinyin: "zhuī", strokes: 8, meaning: "Uccello con coda corta", examples: ["集", "难", "谁"], desc: "Rappresenta un piccolo uccello appollaiato." },
+            { id: 173, char: "雨", pinyin: "yǔ", strokes: 8, meaning: "Pioggia", examples: ["雪", "雷", "云"], desc: "Rappresenta gocce d'acqua che cadono dalle nubi in cielo." },
+            { id: 174, char: "青", pinyin: "qīng", strokes: 8, meaning: "Blu / Verde / Giovane", examples: ["静", "靓", "靖"], desc: "Rappresenta la vegetazione verde rigogliosa." },
+            { id: 175, char: "非", pinyin: "fēi", strokes: 8, meaning: "Non / Errore", examples: ["靠", "绯", "鲱"], desc: "Rappresenta ali aperte in direzioni opposte, negazione." },
+            { id: 176, char: "面", pinyin: "miàn", strokes: 8, meaning: "Faccia / Viso / Farina", examples: ["靤", "靥", "靨"], desc: "Rappresenta il viso umano." },
+            { id: 177, char: "革", pinyin: "gé", strokes: 9, meaning: "Cuoio / Pelle conciata", examples: ["靴", "靶", "鞘"], desc: "Rappresenta la pelle di animale rimossa e lavorata." },
+            { id: 178, char: "韦", pinyin: "wéi", strokes: 9, meaning: "Pelle conciata", examples: ["韩", "韧", "韬"], desc: "Rappresenta due piedi che camminano intorno a un muro." },
+            { id: 179, char: "韭", pinyin: "jiǔ", strokes: 9, meaning: "Porro cinese", examples: ["齏", "韭", "齮"], desc: "Rappresenta germogli di porri che crescono nel terreno." },
+            { id: 180, char: "音", pinyin: "yīn", strokes: 9, meaning: "Suono / Voce", examples: ["暗", "韵", "韶"], desc: "Rappresenta la voce umana o note musicali." },
+            { id: 181, char: "页", pinyin: "yè", strokes: 9, meaning: "Pagina / Testa", examples: ["顶", "顺", "须"], desc: "Rappresenta la testa di una persona o un foglio." },
+            { id: 182, char: "风", pinyin: "fēng", strokes: 9, meaning: "Vento", examples: ["飘", "飒", "飓"], desc: "Rappresenta il vento che soffia e muove l'aria." },
+            { id: 183, char: "飞", pinyin: "fēi", strokes: 9, meaning: "Volare", examples: ["飔", "䬦", "䬧"], desc: "Rappresenta un uccello che spiega le ali in volo." },
+            { id: 184, char: "食", pinyin: "shí", strokes: 9, meaning: "Cibo / Mangiare", examples: ["饭", "饮", "饱"], desc: "Rappresenta una ciotola di cibo coperta." },
+            { id: 185, char: "首", pinyin: "shǒu", strokes: 9, meaning: "Testa / Primo", examples: ["道", "馘", "馗"], desc: "Rappresenta la testa umana con i capelli." },
+            { id: 186, char: "香", pinyin: "xiāng", strokes: 9, meaning: "Fragrante / Profumo", examples: ["馨", "馥", "馫"], desc: "Rappresenta cereali e incenso profumato che brucia." },
+            { id: 187, char: "马", pinyin: "mǎ", strokes: 10, meaning: "Cavallo", examples: ["骑", "驴", "骗"], desc: "Rappresenta un cavallo con criniera e zoccoli." },
+            { id: 188, char: "骨", pinyin: "gǔ", strokes: 10, meaning: "Osso / Scheletro", examples: ["体", "骰", "骸"], desc: "Rappresenta le ossa e le articolazioni del corpo." },
+            { id: 189, char: "高", pinyin: "gāo", strokes: 10, meaning: "Alto / Elevato", examples: ["敲", "毫", "篙"], desc: "Rappresenta una torre alta o un castello a più piani." },
+            { id: 190, char: "髟", pinyin: "biāo", strokes: 10, meaning: "Capelli lunghi", examples: ["发", "髦", "髫"], desc: "Rappresenta capelli lunghi e fluenti." },
+            { id: 191, char: "鬥", pinyin: "dòu", strokes: 10, meaning: "Lottare / Combattere", examples: ["闹", "鬭", "鬲"], desc: "Rappresenta due persone che lottano faccia a faccia." },
+            { id: 192, char: "鬯", pinyin: "chàng", strokes: 10, meaning: "Vino sacrificale aromatico", examples: ["鬰", "鬱", "㼛"], desc: "Rappresenta un recipiente con erbe aromatiche e vino." },
+            { id: 193, char: "鬲", pinyin: "lì", strokes: 10, meaning: "Calderone tripode", examples: ["融", "鬲", "鬳"], desc: "Rappresenta un antico recipiente tripode in ceramica." },
+            { id: 194, char: "鬼", pinyin: "guǐ", strokes: 10, meaning: "Spirito / Fantasma", examples: ["魂", "魅", "魄"], desc: "Rappresenta una figura spettrale con una grande testa." },
+            { id: 195, char: "鱼", pinyin: "yú", strokes: 11, meaning: "Pesce", examples: ["鲜", "鲸", "鲨"], desc: "Rappresenta la forma di un pesce con pinne e coda." },
+            { id: 196, char: "鸟", pinyin: "niǎo", strokes: 11, meaning: "Uccello", examples: ["鸡", "鸭", "鹅"], desc: "Rappresenta un uccello con becco e piume." },
+            { id: 197, char: "卤", pinyin: "lǔ", strokes: 11, meaning: "Terra salata / Salamoia", examples: ["盐", "碱", "卤"], desc: "Rappresenta depositi di sale minerale sulla terra." },
+            { id: 198, char: "鹿", pinyin: "lù", strokes: 11, meaning: "Cervo", examples: ["麓", "麝", "麇"], desc: "Rappresenta un cervo con grandi corna ramificate." },
+            { id: 199, char: "麦", pinyin: "mài", strokes: 11, meaning: "Grano / Frumento", examples: ["面", "麸", "麹"], desc: "Rappresenta una spiga di grano con radici." },
+            { id: 200, char: "麻", pinyin: "má", strokes: 11, meaning: "Canapa / Lino", examples: ["魔", "麽", "麻"], desc: "Rappresenta steli di canapa messi ad asciugare sotto un tetto." },
+            { id: 201, char: "黄", pinyin: "huáng", strokes: 12, meaning: "Giallo", examples: ["黥", "黧", "黯"], desc: "Rappresenta il colore giallo della terra fertile." },
+            { id: 202, char: "黍", pinyin: "shǔ", strokes: 12, meaning: "Miglilio", examples: ["黎", "黏", "黍"], desc: "Rappresenta le piante di miglio mature." },
+            { id: 203, char: "黑", pinyin: "hēi", strokes: 12, meaning: "Nero / Scuro", examples: ["墨", "黔", "默"], desc: "Rappresenta fuliggine e oscurità." },
+            { id: 204, char: "黹", pinyin: "zhǐ", strokes: 12, meaning: "Ricamo / Cucito", examples: ["黻", "黼", "黹"], desc: "Rappresenta motivi ricamati con ago e filo." },
+            { id: 205, char: "黽", pinyin: "mǐn", strokes: 13, meaning: "Rana / Rospo", examples: ["蝇", "黾", "鼀"], desc: "Rappresenta una rana o un rospo accovacciato." },
+            { id: 206, char: "鼎", pinyin: "dǐng", strokes: 13, meaning: "Tripode cinese", examples: ["鼏", "鼐", "鼒"], desc: "Rappresenta un grande calderone cerimoniale a treppiede." },
+            { id: 207, char: "鼓", pinyin: "gǔ", strokes: 13, meaning: "Tamburo", examples: ["鼗", "鼓", "鼙"], desc: "Rappresenta un tamburo tradizionale su supporto." },
+            { id: 208, char: "鼠", pinyin: "shǔ", strokes: 13, meaning: "Topo / Ratto", examples: ["鼢", "鼹", "鼯"], desc: "Rappresenta un topo con lunghi denti e coda." },
+            { id: 209, char: "鼻", pinyin: "bí", strokes: 14, meaning: "Naso", examples: ["鼾", "鼽", "齃"], desc: "Rappresenta il naso umano." },
+            { id: 210, char: "齐", pinyin: "qí", strokes: 14, meaning: "Uguale / Veloce", examples: ["齑", "齏", "𩼘"], desc: "Rappresenta spighe di grano della stessa altezza." },
+            { id: 211, char: "齿", pinyin: "chǐ", strokes: 15, meaning: "Denti", examples: ["龄", "龀", "龃"], desc: "Rappresenta la dentatura umana." },
+            { id: 212, char: "龙", pinyin: "lóng", strokes: 16, meaning: "Drago", examples: ["龚", "龛", "龙头"], desc: "Rappresenta il mitico drago cinese con scaglie." },
+            { id: 213, char: "龟", pinyin: "guī", strokes: 16, meaning: "Tartaruga", examples: ["龝", "龞", "龟"], desc: "Rappresenta una tartaruga vista dall'alto con guscio." },
+            { id: 214, char: "龠", pinyin: "yuè", strokes: 17, meaning: "Flauto / Strumento a fiato", examples: ["龠", "𥫞", "𥫟"], desc: "Rappresenta un antico strumento musicale a fiato con canne multiple." }
+        ];
+
+        let favorites = JSON.parse(localStorage.getItem('bushou_favorites')) || [1, 9, 30, 32, 61, 75, 85, 86];
+        let currentModalRadical = null;
+
+        // Comprehensive Dictionary for Derived Characters (Pinyin & Meanings)
+        const derivedCharsDict = {
+            "丁": { p: "dīng", m: "chiodo / uomo" }, "七": { p: "qī", m: "sette" }, "万": { p: "wàn", m: "diecimila" },
+            "中": { p: "zhōng", m: "centro" }, "丰": { p: "fēng", m: "abbondante" }, "串": { p: "chuàn", m: "spiedino" },
+            "丸": { p: "wán", m: "pillola" }, "主": { p: "zhǔ", m: "padrone" }, "丹": { p: "dān", m: "cinabro / rosso" },
+            "义": { p: "yì", m: "giustizia" }, "之": { p: "zhī", m: "di / possesso" }, "乎": { p: "hū", m: "particella" },
+            "九": { p: "jiǔ", m: "nove" }, "乱": { p: "luàn", m: "caos / disordine" }, "乳": { p: "rǔ", m: "latte / seno" },
+            "了": { p: "le", m: "completato" }, "事": { p: "shì", m: "fatto / cosa" }, "予": { p: "yǔ", m: "dare / io" },
+            "于": { p: "yú", m: "in / verso" }, "五": { p: "wǔ", m: "cinque" }, "井": { p: "jǐng", m: "pozzo" },
+            "亡": { p: "wáng", m: "morire / fuggire" }, "京": { p: "jīng", m: "capitale" }, "高": { p: "gāo", m: "alto" },
+            "从": { p: "cóng", m: "seguire / da" }, "众": { p: "zhòng", m: "molti / folla" }, "休": { p: "xiū", m: "riposare" },
+            "元": { p: "yuán", m: "primo / valuta" }, "兄": { p: "xiōng", m: "fratello magg." }, "光": { p: "guāng", m: "luce / raggio" },
+            "内": { p: "nèi", m: "interno" }, "全": { p: "quán", m: "tutto / intero" }, "两": { p: "liǎng", m: "due / paio" },
+            "分": { p: "fēn", m: "dividere / minuto" }, "公": { p: "gōng", m: "pubblico" }, "共": { p: "gòng", m: "insieme" },
+            "冋": { p: "jiōng", m: "deserto" }, "册": { p: "cè", m: "volume / registro" }, "再": { p: "zài", m: "ancora / di nuovo" },
+            "写": { p: "xiě", m: "scrivere" }, "军": { p: "jūn", m: "esercito" }, "冠": { p: "guān", m: "corona" },
+            "冻": { p: "dòng", m: "gelare / congelato" }, "冷": { p: "lěng", m: "freddo" }, "冰": { p: "bīng", m: "ghiaccio" },
+            "凡": { p: "fán", m: "comune / ordinario" }, "凭": { p: "píng", m: "basarsi su" }, "凤": { p: "fèng", m: "fenice" },
+            "凶": { p: "xiōng", m: "feroce / nefasto" }, "凹": { p: "āo", m: "concavo" }, "凸": { p: "tū", m: "convesso" },
+            "切": { p: "qiē", m: "tagliare" }, "初": { p: "chū", m: "inizio / primo" }, "动": { p: "dòng", m: "muovere" },
+            "务": { p: "wù", m: "compito / affare" }, "勉": { p: "miǎn", m: "sforzarsi" }, "包": { p: "bāo", m: "avvolgere / borsa" },
+            "匆": { p: "cōng", m: "frettoloso" }, "匍": { p: "pú", m: "strisciare" }, "匙": { p: "chí", m: "cucchiaio" },
+            "北": { p: "běi", m: "nord" }, "化": { p: "huà", m: "trasformare" }, "匣": { p: "xiá", m: "scatola / astuccio" },
+            "汇": { p: "huì", m: "confluire" }, "医": { p: "yī", m: "medico / medicina" }, "区": { p: "qū", m: "area / distretto" },
+            "匹": { p: "pǐ", m: "pezza / compagno" }, "千": { p: "qiān", m: "mille" }, "升": { p: "shēng", m: "litro / salire" },
+            "午": { p: "wǔ", m: "mezzogiorno" }, "占": { p: "zhān", m: "divinare / occupare" }, "卦": { p: "guà", m: "esagramma" },
+            "卡": { p: "kǎ", m: "scheda / incagliare" }, "印": { p: "yìn", m: "sigillo / timbro" }, "危": { p: "wēi", m: "pericoloso" },
+            "卵": { p: "luǎn", m: "uovo / ovulo" }, "厄": { p: "è", m: "calamità" }, "历": { p: "lì", m: "storia / calendario" },
+            "厚": { p: "hòu", m: "spesso / generoso" }, "去": { p: "qù", m: "andare via" }, "县": { p: "xiàn", m: "contea" },
+            "参": { p: "cān", m: "partecipare" }, "友": { p: "yǒu", m: "amico" }, "发": { p: "fā", m: "emettere / capelli" },
+            "取": { p: "qǔ", m: "prendere / trarre" }, "吃": { p: "chī", m: "mangiare" }, "问": { p: "wèn", m: "chiedere" },
+            "听": { p: "tīng", m: "ascoltare" }, "国": { p: "guó", m: "paese / stato" }, "圆": { p: "yuán", m: "rotondo" },
+            "园": { p: "yuán", m: "giardino / parco" }, "地": { p: "dì", m: "terra / terreno" }, "坐": { p: "zuò", m: "sedersi" },
+            "城": { p: "chéng", m: "città / mura" }, "声": { p: "shēng", m: "voce / suono" }, "壳": { p: "ké", m: "guscio / crosta" },
+            "壶": { p: "hú", m: "teiera / vaso" }, "各": { p: "gè", m: "ciascuno" }, "备": { p: "bèi", m: "preparare" },
+            "处": { p: "chù", m: "luogo / ufficio" }, "复": { p: "fù", m: "ripetere / ritorno" }, "夏": { p: "xià", m: "estate" },
+            "夔": { p: "kuí", m: "drago leggendario" }, "外": { p: "wài", m: "fuori / estero" }, "多": { p: "duō", m: "molto / tanto" },
+            "夜": { p: "yè", m: "notte" }, "天": { p: "tiān", m: "cielo / giorno" }, "太": { p: "tài", m: "troppo / eccelso" },
+            "夫": { p: "fū", m: "marito / uomo" }, "妈": { p: "mā", m: "mamma" }, "好": { p: "hǎo", m: "buono / bene" },
+            "如": { p: "rú", m: "come / simile" }, "字": { p: "zì", m: "carattere" }, "孔": { p: "kǒng", m: "foro / confucio" },
+            "存": { p: "cún", m: "conservare / vivere" }, "家": { p: "jiā", m: "famiglia / casa" }, "安": { p: "ān", m: "pace / sicuro" },
+            "封": { p: "fēng", m: "sigillare / busta" }, "导": { p: "dǎo", m: "guidare / condurre" }, "射": { p: "shè", m: "tirare / lanciare" },
+            "少": { p: "shǎo", m: "poco / giovane" }, "尖": { p: "jiān", m: "appuntito / apice" }, "尘": { p: "chén", m: "polvere" },
+            "尤": { p: "yóu", m: "particolarmente" }, "就": { p: "jiù", m: "allora / subito" }, "尬": { p: "gà", m: "imbarazzante" },
+            "局": { p: "jú", m: "ufficio / partita" }, "层": { p: "céng", m: "piano / strato" }, "居": { p: "jū", m: "abitare / dimora" },
+            "屯": { p: "tún", m: "stivare / villaggio" }, "屰": { p: "nì", m: "ribellarsi" }, "㞢": { p: "yī", m: "antico simbolo" },
+            "岁": { p: "suì", m: "età / anno" }, "岩": { p: "yán", m: "rupe / roccia" }, "岛": { p: "dǎo", m: "isola" },
+            "川": { p: "chuān", m: "fiume" }, "州": { p: "zhōu", m: "stato / regione" }, "顺": { p: "shùn", m: "favorevole / seguire" },
+            "左": { p: "zuǒ", m: "sinistra" }, "巧": { p: "qiǎo", m: "abile / ingegnoso" }, "巨": { p: "jù", m: "gigante / enorme" },
+            "已": { p: "yǐ", m: "già" }, "巴": { p: "bā", m: "bramare / palmo" }, "巷": { p: "xiàng", m: "vicolo / corsia" },
+            "市": { p: "shì", m: "città / mercato" }, "布": { p: "bù", m: "stoffa / spargere" }, "带": { p: "dài", m: "fascia / portare" },
+            "平": { p: "píng", m: "piano / pace" }, "年": { p: "nián", m: "anno" }, "并": { p: "bìng", m: "inoltre / unire" },
+            "幻": { p: "huàn", m: "illusione / fantasia" }, "幽": { p: "yōu", m: "tranquillo / cupo" }, "㡭": { p: "jì", m: "proseguire" },
+            "床": { p: "chuáng", m: "letto" }, "库": { p: "kù", m: "magazzino / deposito" }, "店": { p: "diàn", m: "negozio / bottega" },
+            "延": { p: "yán", m: "prolungare" }, "建": { p: "jiàn", m: "costruire / fondare" }, "廷": { p: "tíng", m: "corte reale" },
+            "弄": { p: "nòng", m: "maneggiare / vicolo" }, "弈": { p: "yì", m: "gioco del weiqi" }, "算": { p: "suàn", m: "calcolare / contare" },
+            "式": { p: "shì", m: "formula / tipo" }, "弑": { p: "shì", m: "regicidio / uccidere" }, "㢠": { p: "jiǒng", m: "luogo lontano" },
+            "张": { p: "zhāng", m: "aprire / foglio" }, "强": { p: "qiáng", m: "forte / potente" }, "弹": { p: "tán", m: "suonare / proiettile" },
+            "彑": { p: "jì", m: "muso animale" }, "录": { p: "lù", m: "registrare" }, "彗": { p: "huì", m: "cometa / scopa" },
+            "形": { p: "xíng", m: "forma / profilo" }, "彦": { p: "yàn", m: "erudito / elegante" }, "彩": { p: "cǎi", m: "colore / varietà" },
+            "很": { p: "hěn", m: "molto" }, "得": { p: "dé", m: "ottenere / potere" }, "往": { p: "wǎng", m: "verso / andare" },
+            "想": { p: "xiǎng", m: "pensare / volere" }, "情": { p: "qíng", m: "emozione / affetto" }, "志": { p: "zhì", m: "volontà / aspirazione" },
+            "战": { p: "zhàn", m: "guerra / lottare" }, "我": { p: "wǒ", m: "io / me stesso" }, "成": { p: "chéng", m: "diventare / riuscire" },
+            "房": { p: "fáng", m: "camera / casa" }, "所": { p: "suǒ", m: "luogo / sede" }, "扁": { p: "biǎn", m: "piatto" },
+            "打": { p: "dǎ", m: "colpire / fare" }, "找": { p: "zhǎo", m: "cercare" }, "指": { p: "zhǐ", m: "dito / indicare" },
+            "翅": { p: "chì", m: "ala / pinna" }, "攱": { p: "guǐ", m: "sostegno" }, "㩗": { p: "xié", m: "portare a mano" },
+            "收": { p: "shōu", m: "ricevere / ritirare" }, "攻": { p: "gōng", m: "attaccare" }, "改": { p: "gǎi", m: "modificare / correggere" },
+            "刘": { p: "liú", m: "cognome Liu / ascia" }, "齐": { p: "qí", m: "ordinato / pari" }, "斋": { p: "zhāi", m: "studio / digiuno" },
+            "料": { p: "liào", m: "materia / prevedere" }, "斜": { p: "xié", m: "obliquo / pendente" }, "斡": { p: "wò", m: "mediare / ruotare" },
+            "斥": { p: "chì", m: "respingere / sgridare" }, "斧": { p: "fǔ", m: "ascia" }, "斩": { p: "zhǎn", m: "decapitare / troncare" },
+            "放": { p: "fàng", m: "posare / liberare" }, "旗": { p: "qí", m: "vessillo / bandiera" }, "旅": { p: "lǚ", m: "viaggiare / truppa" },
+            "既": { p: "jì", m: "già / dal momento che" }, "旡": { p: "jì", m: "soffocare / sazio" }, "明": { p: "míng", m: "chiaro / brillante" },
+            "早": { p: "zǎo", m: "mattino / presto" }, "时": { p: "shí", m: "tempo / momento" }, "曲": { p: "qū", m: "melodia / curvo" },
+            "更": { p: "gèng", m: "ancora più" }, "曹": { p: "cáo", m: "corporazione / Cao" }, "有": { p: "yǒu", m: "avere / esistere" },
+            "朋": { p: "péng", m: "amico / sodale" }, "期": { p: "qī", m: "scadenza / fase" }, "林": { p: "lín", m: "bosco" },
+            "森": { p: "sēn", m: "foresta fitta" }, "树": { p: "shù", m: "albero / pianta" }, "歌": { p: "gē", m: "canzone / canto" },
+            "欢": { p: "huān", m: "esultanza / gioia" }, "欲": { p: "yù", m: "voglia / desiderio" }, "步": { p: "bù", m: "passo / cammino" },
+            "此": { p: "cǐ", m: "questo / qui" }, "正": { p: "zhèng", m: "esatto / retto" }, "死": { p: "sǐ", m: "morire / morte" },
+            "歼": { p: "jiān", m: "annientare" }, "残": { p: "cán", m: "incompleto / crudele" }, "段": { p: "duàn", m: "tratto / brano" },
+            "殷": { p: "yīn", m: "dinastia Yin / ricco" }, "毅": { p: "yì", m: "tenacia / fermezza" }, "母": { p: "mǔ", m: "mamma / femmina" },
+            "每": { p: "měi", m: "ciascuno / ogni" }, "毒": { p: "dú", m: "tossina / veleno" }, "皆": { p: "jiē", m: "tutti quanti" },
+            "毙": { p: "bì", m: "abbattere / perire" }, "毛": { p: "máo", m: "peluria / pelo" }, "毫": { p: "háo", m: "finezza / pelo" },
+            "毡": { p: "zhān", m: "feltro" }, "毯": { p: "tǎn", m: "coperta / tappeto" }, "民": { p: "mín", m: "popolo / cittadini" },
+            "纸": { p: "zhǐ", m: "foglio di carta" }, "婚": { p: "hūn", m: "nozze / sposarsi" }, "氛": { p: "fēn", m: "atmosfera" },
+            "氢": { p: "qīng", m: "idrogeno" }, "氧": { p: "yǎng", m: "ossigeno" }, "洗": { p: "xǐ", m: "detergere / lavare" },
+            "河": { p: "hé", m: "corso d'acqua / fiume" }, "湖": { p: "hú", m: "bacino / lago" }, "灯": { p: "dēng", m: "lume / lampada" },
+            "烧": { p: "shāo", m: "cuocere / ardere" }, "烤": { p: "kǎo", m: "grigliare / arrostire" }, "爬": { p: "pá", m: "arrampicarsi" },
+            "爱": { p: "ài", m: "amare / affetto" }, "爵": { p: "jué", m: "calice / titolo" }, "爷": { p: "yé", m: "nonno paterno" },
+            "爸": { p: "bà", m: "papà" }, "斧": { p: "fǔ", m: "scure / ascia" }, "爽": { p: "shuǎng", m: "fresco / gradevole" },
+            "㸚": { p: "lǐ", m: "trama fine" }, "㸛": { p: "xiào", m: "riga / fessura" }, "牀": { p: "chuáng", m: "letto antico" },
+            "牁": { p: "gē", m: "palo di ormeggio" }, "牂": { p: "zāng", m: "pecora giovane" }, "版": { p: "bǎn", m: "matrice / tiratura" },
+            "牌": { p: "pái", m: "targa / cartello" }, "牍": { p: "dú", m: "tavoletta lignea" }, "牙": { p: "yá", m: "dente / zanna" },
+            "㸡": { p: "jiè", m: "pezzo diviso" }, "特": { p: "tè", m: "singolare / speciale" }, "物": { p: "wù", m: "materia / oggetto" },
+            "牧": { p: "mù", m: "pascolo / guidare" }, "猫": { p: "māo", m: "felino gatto" }, "独": { p: "dú", m: "solitario / solo" },
+            "犯": { p: "fàn", m: "violare / commettere" }, "玩": { p: "wán", m: "divertirsi / gioco" }, "珍": { p: "zhēn", m: "prezioso / raro" },
+            "珠": { p: "zhū", m: "perla / gemma" }, "率": { p: "lǜ", m: "rapporto / guidare" }, "玅": { p: "miào", m: "sublime / arcano" },
+            "兹": { p: "zī", m: "questo / attualmente" }, "宝": { p: "bǎo", m: "bene prezioso" }, "现": { p: "xiàn", m: "attuale / mostrarsi" },
+            "瓣": { p: "bàn", m: "petalo / spicchio" }, "瓠": { p: "hù", m: "zucca a fiasco" }, "瓢": { p: "piáo", m: "mestolo di zucca" },
+            "瓶": { p: "píng", m: "bottiglia / fiasco" }, "瓷": { p: "cí", m: "porcellana fine" }, "瓮": { p: "wèng", m: "giara / orcio" },
+            "甜": { p: "tián", m: "zuccherato / dolce" }, "甚": { p: "shèn", m: "eccessivo / assai" }, "苷": { p: "gān", m: "glicoside chimico" },
+            "性": { p: "xìng", m: "carattere / sesso" }, "甥": { p: "shēng", m: "nipote di sorella" }, "甦": { p: "sū", m: "riprendere vita" },
+            "甩": { p: "shuǎi", m: "scagliare con forza" }, "甪": { p: "lù", m: "creatura mitica" }, "甭": { p: "béng", m: "senza bisogno di" },
+            "男": { p: "nán", m: "uomo / maschio" }, "界": { p: "jiè", m: "limite / mondo" }, "思": { p: "sī", m: "riflettere / memoria" },
+            "疏": { p: "shū", m: "sparpagliato / rado" }, "疑": { p: "yí", m: "dubitare / incertezza" }, "疌": { p: "jié", m: "svelto / agile" },
+            "病": { p: "bìng", m: "patologia / male" }, "疼": { p: "téng", m: "dolore fisico" }, "痛": { p: "tòng", m: "fitta / sofferenza" },
+            "登": { p: "dēng", m: "salire in cima" }, "癸": { p: "guǐ", m: "decimo tronco" }, "発": { p: "fā", m: "emettere / inizio" },
+            "的": { p: "de", m: "particella genitiva" }, "百": { p: "bǎi", m: "cento" }, "坡": { p: "pō", m: "discesa / pendio" },
+            "皱": { p: "zhòu", m: "rughetta / piega" }, "被": { p: "bèi", m: "subire / trapunta" }, "盆": { p: "pén", m: "bacinella / catino" },
+            "盘": { p: "pán", m: "vassoio / tondo" }, "盏": { p: "zhǎn", m: "tazzina / lanterna" }, "矜": { p: "jīn", m: "austero / pietoso" },
+            "矞": { p: "yù", m: "splendore del sole" }, "㞺": { p: "zú", m: "brusco / improvviso" }, "短": { p: "duǎn", m: "breve / corto" },
+            "矫": { p: "jiǎo", m: "raddrizzare" }, "知": { p: "zhī", m: "sapere / nozione" }, "码": { p: "mǎ", m: "cifra / molo" },
+            "砂": { p: "shā", m: "rena / sabbia" }, "硬": { p: "yìng", m: "robusto / duro" }, "礼": { p: "lǐ", m: "buone maniere / rito" },
+            "社": { p: "shè", m: "comunità / gruppo" }, "祖": { p: "zǔ", m: "avo / fondatore" }, "离": { p: "lí", m: "separazione / via" },
+            "禽": { p: "qín", m: "pennuti / uccelli" }, "禹": { p: "yǔ", m: "imperatore Yu" }, "秋": { p: "qiū", m: "stagione autunno" },
+            "和": { p: "hé", m: "pace / assieme a" }, "种": { p: "zhǒng", m: "seme / specie" }, "空": { p: "kōng", m: "cielo / vacuo" },
+            "穿": { p: "chuān", m: "calzare / forare" }, "究": { p: "jiū", m: "esaminare a fondo" }, "站": { p: "zhàn", m: "stare ritto / fermata" },
+            "童": { p: "tóng", m: "fanciullezza" }, "端": { p: "duān", m: "capo / estremità" }, "笑": { p: "xiào", m: "sorriso / ridere" },
+            "笔": { p: "bǐ", m: "strumento scrittorio" }, "粉": { p: "fěn", m: "cipria / farinoso" }, "粒": { p: "lì", m: "chicco / granello" },
+            "粗": { p: "cū", m: "ruvido / grossolano" }, "红": { p: "hóng", m: "rosso rubino" }, "绿": { p: "lǜ", m: "verde clorofilla" },
+            "缸": { p: "gāng", m: "tinozza / giara" }, "缺": { p: "quē", m: "mancanza / vuoto" }, "罂": { p: "yīng", m: "papavero / vaso" },
+            "罗": { p: "luó", m: "trama a rete" }, "罚": { p: "fá", m: "sanzionare / pena" }, "罢": { p: "bà", m: "desistere / sciopero" },
+            "美": { p: "měi", m: "grazioso / bello" }, "群": { p: "qún", m: "mandria / stormo" }, "着": { p: "zhe", m: "gerundio / stato" },
+            "习": { p: "xí", m: "apprendere / prassi" }, "翻": { p: "fān", m: "voltare / trasporre" }, "翔": { p: "xiáng", m: "planare con ali" },
+            "考": { p: "kǎo", m: "esaminare" }, "者": { p: "zhě", m: "persona che fa" }, "耆": { p: "qí", m: "anziano saggio" },
+            "耐": { p: "nài", m: "resistenza al tempo" }, "耍": { p: "shuǎ", m: "giocare / scherzare" }, "耑": { p: "zhuān", m: "radice prima" },
+            "耕": { p: "gēng", m: "arare la terra" }, "耘": { p: "yún", m: "diserbare a mano" }, "耙": { p: "bà", m: "erpice da campo" },
+            "闻": { p: "wén", m: "udire / odorare" }, "聊": { p: "liáo", m: "conversare" }, "聪": { p: "cōng", m: "mente sveglia" },
+            "肃": { p: "sù", m: "riverenza / austero" }, "肄": { p: "yì", m: "applicarsi allo studio" }, "肇": { p: "zhào", m: "promuovere / inizio" },
+            "腐": { p: "fǔ", m: "deperito / tofu" }, "肠": { p: "cháng", m: "intestino / budello" }, "肚": { p: "dù", m: "addome / trippa" },
+            "姬": { p: "jī", m: "dama d'onore" }, "卧": { p: "wò", m: "coricarsi" }, "臧": { p: "zāng", m: "degno di stima" },
+            "臭": { p: "chòu", m: "olezzo cattivo" }, "臬": { p: "niè", m: "criterio / bersaglio" }, "臞": { p: "qú", m: "magro e smunto" },
+            "到": { p: "dào", m: "giungere a meta" }, "致": { p: "zhì", m: "cagionare / invio" }, "臺": { p: "tái", m: "piattaforma / podio" },
+            "舂": { p: "chōng", m: "pestare col mazzuolo" }, "舅": { p: "jiù", m: "fratello della madre" }, "舁": { p: "yú", m: "reggere insieme" },
+            "舔": { p: "tiǎn", m: "passare la lingua" }, "舐": { p: "shì", m: "leccare piano" }, "舜": { p: "shùn", m: "sovrano Shun" },
+            "舝": { p: "xiá", m: "copiglia della ruota" }, "航": { p: "háng", m: "navigazione aerea" }, "船": { p: "chuán", m: "vascello marino" },
+            "舲": { p: "líng", m: "piccolo barchino" }, "艰": { p: "jiān", m: "asperità / ostico" }, "良": { p: "liáng", m: "ottimale / buono" },
+            "垦": { p: "kěn", m: "bonifica terrena" }, "艳": { p: "yàn", m: "variopinto / vivido" }, "艴": { p: "fú", m: "sdegnato in viso" },
+            "艵": { p: "pīng", m: "tinta accesa" }, "花": { p: "huā", m: "fiore di campo" }, "草": { p: "cǎo", m: "manto erboso" },
+            "茶": { p: "chá", m: "foglie di tè" }, "虎": { p: "hǔ", m: "fiera tigre" }, "虐": { p: "nüè", m: "crudeltà" },
+            "彪": { p: "biāo", m: "giovane felino" }, "蚂": { p: "mǎ", m: "piccolo insetto" }, "蚁": { p: "yǐ", m: "formicaio" },
+            "蛇": { p: "shé", m: "rettile serpente" }, "衄": { p: "nǜ", m: "emorragia al naso" }, "衅": { p: "xìn", m: "dissidio / rito" },
+            "街": { p: "jiē", m: "stradone urbano" }, "衙": { p: "yá", m: "pretorio antico" }, "衍": { p: "yǎn", m: "esondare / diffondersi" },
+            "衬": { p: "chèn", m: "sottoveste / camicia" }, "西": { p: "xī", m: "punto cardinale ovest" }, "覃": { p: "tán", m: "abisso / profondo" },
+            "覆": { p: "fù", m: "rovesciato / coperchio" }, "观": { p: "guān", m: "mirare / panorama" }, "规": { p: "guī", m: "regolamento" },
+            "觉": { p: "jué", m: "percezione sensoriale" }, "解": { p: "jiě", m: "districare / capire" }, "触": { p: "chù", m: "sfiorare con tatto" },
+            "觥": { p: "gōng", m: "corno per brindisi" }, "说": { p: "shuō", m: "verbalizzare / dire" }, "话": { p: "huà", m: "conversazione" },
+            "语": { p: "yǔ", m: "idioma / fraseggio" }, "谿": { p: "xī", m: "gola alpina" }, "谸": { p: "qiān", m: "valletta alpina" },
+            "逗": { p: "dòu", m: "giocare con brio" }, "豌": { p: "wān", m: "legume pisello" }, "象": { p: "xiàng", m: "elefante / simbolo" },
+            "豚": { p: "tún", m: "maialetto / delfino" }, "豹": { p: "bào", m: "ghepardo maculato" }, "豺": { p: "chái", m: "canide sciacallo" },
+            "貌": { p: "mào", m: "lineamenti / posa" }, "财": { p: "cái", m: "finanze / patrimonio" }, "购": { p: "gòu", m: "acquistare merce" },
+            "货": { p: "huò", m: "merce a magazzino" }, "赦": { p: "shè", m: "grazia / assoluzione" }, "赧": { p: "nǎn", m: "arrossire pudico" },
+            "赪": { p: "chēng", m: "vermiglio brillante" }, "赶": { p: "gǎn", m: "sbrigarsi / caccia" }, "起": { p: "qǐ", m: "levarsi in piedi" },
+            "超": { p: "chāo", m: "oltrepassare" }, "跑": { p: "pǎo", m: "corsa a perdifiato" }, "跳": { p: "tiào", m: "balzo atletico" },
+            "路": { p: "lù", m: "via transitabile" }, "躲": { p: "duǒ", m: "nascondersi bene" }, "躯": { p: "qū", m: "struttura corporea" },
+            "辆": { p: "liàng", m: "classif. per auto" }, "输": { p: "shū", m: "trasportare / resa" }, "转": { p: "zhuǎn", m: "sterzare la prua" },
+            "辣": { p: "là", m: "sapore piccante" }, "辞": { p: "cí", m: "lettere / dimissione" }, "辨": { p: "biàn", m: "discernere il vero" },
+            "辱": { p: "rǔ", m: "umiliazione" }, "农": { p: "nóng", m: "coltivazione rurale" }, "辴": { p: "chēn", m: "ilarità fragorosa" },
+            "这": { p: "zhè", m: "questo qui vicino" }, "边": { p: "biān", m: "orlo / frontiera" }, "远": { p: "yuǎn", m: "spazio remoto" },
+            "都": { p: "dōu", m: "capitale / tutti" }, "部": { p: "bù", m: "dipartimento" }, "邮": { p: "yóu", m: "servizio postale" },
+            "酒": { p: "jiǔ", m: "mosto fermentato" }, "醉": { p: "zuì", m: "ebbrezza alcolica" }, "醒": { p: "xǐng", m: "destarsi dal sonno" },
+            "釉": { p: "yòu", m: "smaltatura lucida" }, "释": { p: "shì", m: "delucidare / sciogliere" }, "粃": { p: "bǐ", m: "spiga senza chicco" },
+            "重": { p: "zhòng", m: "carico pesante" }, "野": { p: "yě", m: "campagna aperta" }, "量": { p: "liàng", m: "entità metrica" },
+            "钱": { p: "qián", m: "contante / soldi" }, "银": { p: "yín", m: "metallo argenteo" }, "钟": { p: "zhōng", m: "pendola / campana" },
+            "镜": { p: "jìng", m: "superficie specchio" }, "長": { p: "cháng", m: "lunghezza (trad.)" }, "镫": { p: "dèng", m: "staffa da cavalcata" },
+            "间": { p: "jiān", m: "spazio intermedio" }, "闭": { p: "bì", m: "sbarrare gli occhi" }, "防": { p: "fáng", m: "premunirsi contro" },
+            "院": { p: "yuàn", m: "chiostro / convitto" }, "阻": { p: "zǔ", m: "barriera / sbarro" }, "逮": { p: "dài", m: "acciuffare al volo" },
+            "隶": { p: "lì", m: "subalterno / schiavo" }, "隷": { p: "lì", m: "servo (variante)" }, "集": { p: "jí", m: "raccogliersi in folla" },
+            "难": { p: "nán", m: "intoppo / gravoso" }, "谁": { p: "shuí", m: "quale persona?" }, "雪": { p: "xuě", m: "precipitazione nevosa" },
+            "雷": { p: "léi", m: "rombo del tuono" }, "云": { p: "yún", m: "nembi in cielo" }, "静": { p: "jìng", m: "silenzio placido" },
+            "靓": { p: "liàng", m: "figura avvenente" }, "靖": { p: "jìng", m: "ristabilire la calma" }, "靠": { p: "kào", m: "dare appoggio a" },
+            "绯": { p: "fēi", m: "scarlatto vivo" }, "鲱": { p: "fēi", m: "aringa marina" }, "靤": { p: "pào", m: "foruncolo cutaneo" },
+            "靥": { p: "yè", m: "incavo del sorriso" }, "靨": { p: "yè", m: "fossetta (trad.)" }, "靴": { p: "xuē", m: "stivale alto" },
+            "靶": { p: "bǎ", m: "centro del mirino" }, "鞘": { p: "qiào", m: "guaina della lama" }, "韩": { p: "hán", m: "penisola coreana" },
+            "韧": { p: "rèn", m: "fibra elastica" }, "韬": { p: "tāo", m: "strategia occulta" }, "齏": { p: "jī", m: "pestato saporito" },
+            "韭": { p: "jiǔ", m: "piantina di porro" }, "齮": { p: "yǐ", m: "addentare di taglio" }, "暗": { p: "àn", m: "penombra fitta" },
+            "韵": { p: "yùn", m: "cadenza musicale" }, "韶": { p: "sháo", m: "melodia soave" }, "顶": { p: "dǐng", m: "vertice montuoso" },
+            "须": { p: "xū", m: "barbetta / dovere" }, "飘": { p: "piāo", m: "ondeggiare nell'aria" }, "飒": { p: "sà", m: "soffio repentino" },
+            "飓": { p: "jù", m: "ciclone violento" }, "飔": { p: "sī", m: "folata fredda" }, "䬦": { p: "tāo", m: "impeto d'aria" },
+            "䬧": { p: "hǒu", m: "ululato del vento" }, "饭": { p: "fàn", m: "ciotola di riso" }, "饮": { p: "yǐn", m: "bevanda dissetante" },
+            "饱": { p: "bǎo", m: "appagato di cibo" }, "道": { p: "dào", m: "sentiero / via" }, "馘": { p: "guó", m: "recidere l'orecchio" },
+            "馗": { p: "kuí", m: "crocicchio maestro" }, "馨": { p: "xīn", m: "profumo che aleggia" }, "馥": { p: "fù", m: "fragranza opulenta" },
+            "馫": { p: "xīn", m: "aroma persistente" }, "骑": { p: "qí", m: "andare a cavallo" }, "驴": { p: "lǘ", m: "animale ciuco" },
+            "骗": { p: "piàn", m: "estorcere con inganno" }, "体": { p: "tǐ", m: "fisionomia corporea" }, "骰": { p: "tóu", m: "dadi a sei facce" },
+            "骸": { p: "hái", m: "scheletro antico" }, "敲": { p: "qiāo", m: "picchiettare al muro" }, "篙": { p: "gāo", m: "asta per la corrente" },
+            "髦": { p: "máo", m: "ciuffo ricercato" }, "髫": { p: "tiáo", m: "ciocca da ragazzo" }, "闹": { p: "nào", m: "frastuono da fiera" },
+            "鬭": { p: "dòu", m: "tenzone (trad.)" }, "鬲": { p: "lì", m: "vaso su tre zampe" }, "鬰": { p: "yù", m: "spessore aromatico" },
+            "鬱": { p: "yù", m: "rigoglio ombroso" }, "㼛": { p: "xíng", m: "ampolla a collo lungo" }, "融": { p: "róng", m: "sciogliersi insieme" },
+            "鬳": { p: "yàn", m: "fornello di creta" }, "魂": { p: "hún", m: "spirito luminoso" }, "魅": { p: "mèi", m: "fascino misterioso" },
+            "魄": { p: "pò", m: "energia terrena" }, "鲜": { p: "xiān", m: "sapore prelibato" }, "鲸": { p: "jīng", m: "mammifero cetaceo" },
+            "鲨": { p: "shā", m: "pescecane marino" }, "鸡": { p: "jī", m: "galletto ruspante" }, "鸭": { p: "yā", m: "volatile acquatico" },
+            "鹅": { p: "é", m: "oca da cortile" }, "盐": { p: "yán", m: "granelli di sale" }, "碱": { p: "jiǎn", m: "minerale basico" },
+            "卤": { p: "lǔ", m: "salamoia densa" }, "麓": { p: "lù", m: "pendice boscosa" }, "麝": { p: "shè", m: "essenza di muschio" },
+            "麇": { p: "jūn", m: "capriolo delle selve" }, "面": { p: "miàn", m: "sfoglia / tagliolini" }, "麸": { p: "fū", m: "involucro del chicco" },
+            "麹": { p: "qū", m: "panetto di lievito" }, "魔": { p: "mó", m: "spirito demoniaco" }, "麽": { p: "me", m: "interrogativo" },
+            "麻": { p: "má", m: "canapa tessile" }, "黥": { p: "qíng", m: "tatuaggio punitivo" }, "黧": { p: "lí", m: "tinta bruna scura" },
+            "黯": { p: "àn", m: "tristezza cupa" }, "黎": { p: "lí", m: "popolazioni / aurora" }, "黏": { p: "nián", m: "sostanza vischiosa" },
+            "黍": { p: "shǔ", m: "spiga di panìco" }, "墨": { p: "mò", m: "tavoletta d'inchiostro" }, "黔": { p: "qián", m: "scuro come carbone" },
+            "默": { p: "mò", m: "taciturno / silenzio" }, "黻": { p: "fú", m: "ricamo ad ascia" }, "黼": { p: "fǔ", m: "drappo dorato" },
+            "黹": { p: "zhǐ", m: "lavorare di ricamo" }, "蝇": { p: "yíng", m: "insetto alato" }, "黾": { p: "mǐn", m: "rospetto d'acqua" },
+            "鼀": { p: "cù", m: "rospo di palude" }, "鼏": { p: "mì", m: "coperchio a cupola" }, "鼐": { p: "nài", m: "tripode maestoso" },
+            "鼒": { p: "zī", m: "tripode a bocca corta" }, "鼗": { p: "táo", m: "tamburino a battagli" }, "鼓": { p: "gǔ", m: "pelle di tamburo" },
+            "鼙": { p: "pí", m: "tamburo da carica" }, "鼢": { p: "fén", m: "talpa dei cunicoli" }, "鼹": { p: "yǎn", m: "scavatore cieco" },
+            "鼯": { p: "wú", m: "roditore planante" }, "鼾": { p: "hān", m: "respiro rumoroso" }, "鼽": { p: "qiú", m: "catarro nasale" },
+            "齃": { p: "è", m: "colmo nasale" }, "齑": { p: "jī", m: "erbe tritate" }, "𩼘": { p: "zhí", m: "pesce rituale" },
+            "龄": { p: "líng", m: "età / annate" }, "龀": { p: "chèn", m: "caduta dei denti" }, "龃": { p: "jǔ", m: "denti malcombacianti" },
+            "龚": { p: "gōng", m: "ossequiare con doni" }, "龛": { p: "kān", m: "tabernacolo a muro" }, "龙头": { p: "lóng", m: "testa del drago" },
+            "庞": { p: "páng", m: "struttura imponente" }, "宠": { p: "chǒng", m: "coccolare / favore" }, "龝": { p: "qiū", m: "mietitura (trad.)" },
+            "龞": { p: "biē", m: "tartaruga palustre" }, "龟": { p: "guī", m: "testuggine longeva" }, "龠": { p: "yuè", m: "flauto cerimoniale" },
+            "𥫞": { p: "yào", m: "zampogna sacra" }, "𥫟": { p: "diào", m: "organo a canne" }
+        };
+
+        // Theme management
+        function initTheme() {
+            const savedTheme = localStorage.getItem('bushou_theme') || 'dark';
+            applyTheme(savedTheme);
+        }
+
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            const icon = document.getElementById('theme-toggle-icon');
+            if (theme === 'dark') {
+                html.classList.add('dark');
+                if (icon) {
+                    icon.className = 'fa-solid fa-sun text-sm text-amber-400';
+                }
+            } else {
+                html.classList.remove('dark');
+                if (icon) {
+                    icon.className = 'fa-solid fa-moon text-sm text-slate-600';
+                }
+            }
+            localStorage.setItem('bushou_theme', theme);
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const targetTheme = isDark ? 'light' : 'dark';
+            applyTheme(targetTheme);
+            showToast(targetTheme === 'dark' ? 'Tema scuro attivato' : 'Tema chiaro attivato');
+        }
+
+        // Quiz State
+        let quizState = {
+            active: false,
+            questions: [],
+            currentIndex: 0,
+            score: 0,
+            totalQuestions: 10
+        };
+
+        // DOM Loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderRadicals(radicalsData);
+            updateFavoritesBadge();
+        });
+
+        // Tab Switching
+        function switchTab(tabName) {
+            ['learn', 'quiz', 'favorites'].forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                document.getElementById(`tab-${t}`).className = "px-3 py-1.5 text-sm font-medium rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition flex items-center space-x-1.5";
+            });
+
+            document.getElementById(`view-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.className = "px-3 py-1.5 text-sm font-medium rounded-lg bg-red-50 text-red-600 dark:bg-red-950/60 dark:text-red-400 transition flex items-center space-x-1.5";
+
+            if (tabName === 'favorites') {
+                renderFavorites();
+            }
+        }
+
+        // Render Radicals Grid
+        function renderRadicals(data, containerId = 'radicals-grid', noResultsId = 'no-results') {
+            const container = document.getElementById(containerId);
+            const noResults = document.getElementById(noResultsId);
+            container.innerHTML = '';
+
+            if (data.length === 0) {
+                noResults.classList.remove('hidden');
+                if (containerId === 'radicals-grid') {
+                    document.getElementById('visible-count').textContent = '0';
+                }
+                return;
+            }
+
+            noResults.classList.add('hidden');
+            if (containerId === 'radicals-grid') {
+                document.getElementById('visible-count').textContent = data.length;
+            }
+
+            data.forEach(rad => {
+                const isFav = favorites.includes(rad.id);
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200 dark:border-slate-800/90 shadow-sm hover:shadow-md hover:border-red-500/60 dark:hover:border-red-500/60 transition-all duration-200 flex flex-col items-center relative group cursor-pointer";
+                card.onclick = () => openModal(rad.id);
+
+                card.innerHTML = `
+                    <div class="absolute top-3 left-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                        #${rad.id}
+                    </div>
+                    <button onclick="event.stopPropagation(); toggleFavorite(${rad.id})" class="absolute top-3 right-3 text-slate-300 dark:text-slate-600 hover:text-amber-500 dark:hover:text-amber-400 transition">
+                        <i class="fa-${isFav ? 'solid text-amber-500' : 'regular'} fa-star"></i>
+                    </button>
+                    <div class="font-chinese text-5xl font-bold text-red-600 dark:text-red-400 my-4 group-hover:scale-110 transition-transform duration-200">
+                        ${rad.char}
+                    </div>
+                    <div class="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 mb-0.5 text-center truncate w-full tracking-wide">
+                        ${rad.pinyin}
+                    </div>
+                    <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 text-center truncate w-full mb-2">
+                        ${rad.meaning}
+                    </div>
+                    <div class="mt-auto pt-2 border-t border-slate-100 dark:border-slate-800 w-full flex items-center justify-between text-[10px] text-slate-400">
+                        <span>Tratti: ${rad.strokes}</span>
+                        <span class="text-red-500 dark:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">Dettagli &rarr;</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Filter Function
+        function filterRadicals() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            const strokeVal = document.getElementById('stroke-filter').value;
+
+            const filtered = radicalsData.filter(rad => {
+                const matchQuery = query === '' || 
+                    rad.char.includes(query) || 
+                    rad.pinyin.toLowerCase().includes(query) || 
+                    rad.meaning.toLowerCase().includes(query) ||
+                    rad.id.toString() === query;
+
+                const matchStroke = strokeVal === 'all' || 
+                    (strokeVal === '12' ? rad.strokes >= 12 : rad.strokes === parseInt(strokeVal));
+
+                return matchQuery && matchStroke;
+            });
+
+            renderRadicals(filtered);
+        }
+
+        // Favorites Handling
+        function toggleFavorite(id) {
+            const index = favorites.indexOf(id);
+            if (index > -1) {
+                favorites.splice(index, 1);
+                showToast("Rimosso dai preferiti");
+            } else {
+                favorites.push(id);
+                showToast("Aggiunto ai preferiti");
+            }
+            localStorage.setItem('bushou_favorites', JSON.stringify(favorites));
+            updateFavoritesBadge();
+            filterRadicals();
+            if (!document.getElementById('view-favorites').classList.contains('hidden')) {
+                renderFavorites();
+            }
+            if (currentModalRadical && currentModalRadical.id === id) {
+                updateModalFavButton();
+            }
+        }
+
+        function clearFavorites() {
+            if (favorites.length === 0) {
+                showToast("Nessun preferito salvato");
+                return;
+            }
+            favorites = [];
+            localStorage.setItem('bushou_favorites', JSON.stringify(favorites));
+            updateFavoritesBadge();
+            renderFavorites();
+            filterRadicals();
+            showToast("Tutti i preferiti sono stati rimossi");
+        }
+
+        function updateFavoritesBadge() {
+            document.getElementById('fav-badge').textContent = favorites.length;
+        }
+
+        function renderFavorites() {
+            const favData = radicalsData.filter(rad => favorites.includes(rad.id));
+            const noFav = document.getElementById('no-favorites');
+            if (favData.length === 0) {
+                noFav.classList.remove('hidden');
+                document.getElementById('favorites-grid').innerHTML = '';
+            } else {
+                noFav.classList.add('hidden');
+                renderRadicals(favData, 'favorites-grid', 'no-favorites');
+            }
+        }
+
+        // Modal Handling
+        function openModal(id) {
+            const rad = radicalsData.find(r => r.id === id);
+            if (!rad) return;
+            currentModalRadical = rad;
+
+            document.getElementById('modal-char').textContent = rad.char;
+            document.getElementById('modal-num').textContent = `# ${rad.id}`;
+            document.getElementById('modal-strokes').textContent = `${rad.strokes} tratti`;
+            document.getElementById('modal-meaning').textContent = rad.meaning;
+            document.getElementById('modal-pinyin').textContent = rad.pinyin;
+            document.getElementById('modal-desc').textContent = rad.desc;
+
+            const examplesContainer = document.getElementById('modal-examples');
+            examplesContainer.innerHTML = '';
+            rad.examples.forEach(ex => {
+                const info = derivedCharsDict[ex] || { p: '', m: 'carattere derivato' };
+                const card = document.createElement('div');
+                card.className = "flex flex-col items-center justify-center p-3 bg-slate-50 dark:bg-slate-800/90 border border-slate-200 dark:border-slate-700/80 rounded-2xl shadow-sm hover:border-red-500/70 dark:hover:border-red-500/70 hover:scale-105 transition-all text-center min-w-[5.25rem] cursor-pointer group";
+                card.title = `Clicca per ascoltare: ${ex}`;
+                card.onclick = () => speakDerivedChar(ex, info.p, info.m);
+
+                card.innerHTML = `
+                    <span class="text-3xl font-chinese font-bold text-slate-800 dark:text-slate-100 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors leading-tight">${ex}</span>
+                    <span class="text-xs font-bold text-red-600 dark:text-red-400 mt-1 tracking-wide">${info.p || '-'}</span>
+                    <span class="text-[11px] font-medium text-slate-500 dark:text-slate-400 mt-0.5 max-w-[6.25rem] truncate">${info.m}</span>
+                `;
+                examplesContainer.appendChild(card);
+            });
+
+            updateModalFavButton();
+
+            const modal = document.getElementById('detail-modal');
+            const box = document.getElementById('modal-content-box');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                box.classList.remove('scale-95', 'opacity-0');
+                box.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        // Speech synthesis for single derived character
+        function speakDerivedChar(char, pinyin, meaning) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(char);
+                utterance.lang = 'zh-CN';
+                utterance.rate = 0.8;
+                window.speechSynthesis.speak(utterance);
+                showToast(`${char} [${pinyin || ''}]: ${meaning || ''}`);
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detail-modal');
+            const box = document.getElementById('modal-content-box');
+            box.classList.remove('scale-100', 'opacity-100');
+            box.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                currentModalRadical = null;
+            }, 200);
+        }
+
+        function updateModalFavButton() {
+            if (!currentModalRadical) return;
+            const isFav = favorites.includes(currentModalRadical.id);
+            const btnText = document.getElementById('modal-fav-text');
+            const btn = document.getElementById('modal-fav-btn');
+
+            if (isFav) {
+                btnText.textContent = "Nei preferiti";
+                btn.className = "px-4 py-2 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 text-sm font-medium rounded-xl transition flex items-center space-x-2";
+            } else {
+                btnText.textContent = "Salva nei preferiti";
+                btn.className = "px-4 py-2 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 text-red-600 dark:text-red-400 text-sm font-medium rounded-xl transition flex items-center space-x-2";
+            }
+        }
+
+        function toggleModalFavorite() {
+            if (currentModalRadical) {
+                toggleFavorite(currentModalRadical.id);
+            }
+        }
+
+        // Simulated Audio Pronunciation
+        function playAudioSimulation() {
+            if (!currentModalRadical) return;
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(currentModalRadical.char);
+                utterance.lang = 'zh-CN';
+                utterance.rate = 0.8;
+                window.speechSynthesis.speak(utterance);
+                showToast(`Riproduzione audio: ${currentModalRadical.pinyin}`);
+            } else {
+                showToast("Sintesi vocale non supportata dal browser");
+            }
+        }
+
+        // Quiz Logic
+        function startQuiz() {
+            quizState.active = true;
+            quizState.currentIndex = 0;
+            quizState.score = 0;
+            quizState.questions = getRandomQuestions(quizState.totalQuestions);
+
+            document.getElementById('quiz-start-screen').classList.add('hidden');
+            document.getElementById('quiz-end-screen').classList.add('hidden');
+            document.getElementById('quiz-play-screen').classList.remove('hidden');
+
+            renderQuizQuestion();
+        }
+
+        function getRandomQuestions(count) {
+            const shuffled = [...radicalsData].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count).map(correct => {
+                // Pick 3 wrong options
+                const wrongOptions = radicalsData.filter(r => r.id !== correct.id)
+                    .sort(() => 0.5 - Math.random())
+                    .slice(0, 3);
+                
+                const options = [...wrongOptions, correct].sort(() => 0.5 - Math.random());
+                return {
+                    correct: correct,
+                    options: options
+                };
+            });
+        }
+
+        function renderQuizQuestion() {
+            if (quizState.currentIndex >= quizState.questions.length) {
+                endQuiz();
+                return;
+            }
+
+            const q = quizState.questions[quizState.currentIndex];
+            document.getElementById('quiz-progress').textContent = `Domanda ${quizState.currentIndex + 1}/${quizState.totalQuestions}`;
+            document.getElementById('quiz-score').textContent = `Punteggio: ${quizState.score}`;
+            document.getElementById('quiz-char').textContent = q.correct.char;
+            document.getElementById('quiz-subinfo').textContent = `Tratti: ${q.correct.strokes}`;
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "w-full py-3.5 px-4 bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-xl text-sm sm:text-base font-medium text-slate-700 dark:text-slate-200 transition text-left flex items-center justify-between";
+                btn.innerHTML = `<span>${opt.meaning}</span> <span class="text-base sm:text-lg text-red-500 dark:text-red-400 font-bold">${opt.pinyin}</span>`;
+                btn.onclick = () => handleQuizAnswer(opt.id === q.correct.id, btn, q.correct);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleQuizAnswer(isCorrect, btnElement, correctRad) {
+            const buttons = document.querySelectorAll('#quiz-options button');
+            buttons.forEach(b => b.disabled = true);
+
+            if (isCorrect) {
+                quizState.score++;
+                btnElement.className = "w-full py-3 px-4 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-500 rounded-xl text-sm font-medium text-emerald-700 dark:text-emerald-300 transition text-left flex items-center justify-between";
+                showToast("Risposta corretta! 🎉");
+            } else {
+                btnElement.className = "w-full py-3 px-4 bg-red-50 dark:bg-red-950/60 border border-red-500 rounded-xl text-sm font-medium text-red-700 dark:text-red-300 transition text-left flex items-center justify-between";
+                // Highlight correct
+                buttons.forEach(b => {
+                    if (b.textContent.includes(correctRad.meaning)) {
+                        b.className = "w-full py-3 px-4 bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-500 rounded-xl text-sm font-medium text-emerald-700 dark:text-emerald-300 transition text-left flex items-center justify-between";
+                    }
+                });
+                showToast("Risposta errata!");
+            }
+
+            setTimeout(() => {
+                quizState.currentIndex++;
+                renderQuizQuestion();
+            }, 1200);
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-play-screen').classList.add('hidden');
+            document.getElementById('quiz-end-screen').classList.remove('hidden');
+            document.getElementById('quiz-final-score').textContent = `${quizState.score}/${quizState.totalQuestions}`;
+            
+            let msg = "Ottimo lavoro!";
+            if (quizState.score === quizState.totalQuestions) msg = "Perfetto! Sei un esperto di Bushou!";
+            else if (quizState.score < 5) msg = "Continua ad allenarti con la sezione Esplora.";
+            document.getElementById('quiz-final-message').textContent = msg;
+        }
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = message;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
