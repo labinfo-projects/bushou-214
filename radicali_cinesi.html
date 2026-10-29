@@ -34,8 +34,8 @@
                     部
                 </div>
                 <div>
-                    <h1 class="font-bold text-lg leading-tight">Bùshǒu 部首 214</h1>
-                    <p class="text-xs text-slate-500 dark:text-slate-400">I radicali del cinese mandarino (c)Giorgio Ruffa 2026 - Sviluppato con Google Canvas</p>
+                    <h1 class="font-bold text-lg leading-tight">Bushou 214</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">部首 I radicali Cinesi (c)2026 Giorgio Ruffa v.1.2</p>
                 </div>
             </div>
 
@@ -79,12 +79,31 @@
                         class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500 transition">
                 </div>
 
-                <!-- Stroke Filter Dropdown -->
-                <div class="flex items-center space-x-3 w-full md:w-auto justify-between md:justify-end">
+                <!-- Filters -->
+                <div class="flex flex-wrap items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+                    <!-- Categoria Dropdown -->
+                    <div class="flex items-center space-x-2">
+                        <span class="text-xs text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">Cat:</span>
+                        <select id="category-filter" onchange="filterRadicals()" 
+                            class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 transition max-w-[135px] sm:max-w-none">
+                            <option value="all">Tutte</option>
+                            <option value="Numeri e Astrazione">Numeri e Astrazione</option>
+                            <option value="Corpo Umano e Persone">Corpo Umano e Persone</option>
+                            <option value="Natura e Ambiente">Natura e Ambiente</option>
+                            <option value="Animali">Animali</option>
+                            <option value="Piante e Agricoltura">Piante e Agricoltura</option>
+                            <option value="Strumenti e Armi">Strumenti e Armi</option>
+                            <option value="Casa, Società e Oggetti">Casa, Società e Oggetti</option>
+                            <option value="Azioni e Movimento">Azioni e Movimento</option>
+                            <option value="Varie">Varie</option>
+                        </select>
+                    </div>
+
+                    <!-- Stroke Filter Dropdown -->
                     <div class="flex items-center space-x-2">
                         <span class="text-xs text-slate-500 dark:text-slate-400 font-medium whitespace-nowrap">Tratti:</span>
                         <select id="stroke-filter" onchange="filterRadicals()" 
-                            class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 transition">
+                            class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500 transition">
                             <option value="all">Tutti (1-17)</option>
                             <option value="1">1 tratto</option>
                             <option value="2">2 tratti</option>
@@ -101,7 +120,7 @@
                         </select>
                     </div>
                     <div id="counter-display" class="text-xs font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap">
-                        Mostrati: <span id="visible-count">214</span>/214
+                        <span id="visible-count">214</span>/214
                     </div>
                 </div>
             </div>
@@ -199,9 +218,10 @@
                     水
                 </div>
                 <div class="flex-1 min-w-0">
-                    <div class="flex items-center space-x-2 mb-1">
+                    <div class="flex flex-wrap items-center gap-2 mb-1">
                         <span id="modal-num" class="text-xs font-semibold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded text-slate-600 dark:text-slate-300"># 85</span>
                         <span id="modal-strokes" class="text-xs font-medium text-slate-500 dark:text-slate-400">4 tratti</span>
+                        <span id="modal-category" class="text-[10px] font-semibold px-2 py-0.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800/50 rounded-lg">Natura e Ambiente</span>
                     </div>
                     <h3 id="modal-meaning" class="text-xl font-bold text-slate-900 dark:text-white truncate">Acqua</h3>
                     <p id="modal-pinyin" class="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400 tracking-wide mt-1">shuǐ</p>
@@ -247,6 +267,90 @@
 
     <!-- Application Script -->
     <script>
+        // Phonetic Fallback Dictionary for TTS (Text-to-Speech)
+        // Mappa radicali ostici o polifoni a omofoni comuni per forzare la pronuncia corretta del motore di sintesi vocale.
+        const ttsFixes = {
+            "丨": "滚", // gǔn
+            "丶": "主", // zhǔ
+            "丿": "撇", // piě
+            "乙": "以", // yǐ
+            "亅": "绝", // jué
+            "亠": "头", // tóu
+            "冂": "窘", // jiōng
+            "冖": "密", // mì
+            "冫": "冰", // bīng
+            "凵": "浅", // qiǎn
+            "勹": "包", // bāo
+            "匚": "方", // fāng
+            "匸": "细", // xì
+            "卩": "节", // jié
+            "厂": "厂", // chǎng
+            "厶": "私", // sī
+            "囗": "围", // wéi
+            "夂": "止", // zhǐ
+            "夊": "虽", // suī
+            "尢": "汪", // wāng
+            "屮": "彻", // chè
+            "巛": "川", // chuān
+            "幺": "要", // yāo
+            "廴": "引", // yǐn
+            "廾": "拱", // gǒng
+            "弋": "义", // yì
+            "彐": "记", // jì
+            "彡": "山", // shān
+            "彳": "赤", // chì
+            "攴": "扑", // pū
+            "毋": "吴", // wú
+            "爻": "姚", // yáo
+            "爿": "强", // qiáng
+            "玄": "旋", // xuán
+            "疒": "那", // nè
+            "癶": "波", // bō
+            "禸": "柔", // róu
+            "聿": "玉", // yù
+            "舛": "喘", // chuǎn
+            "艮": "亘", // gèn
+            "艹": "草", // cǎo
+            "虍": "呼", // hū
+            "襾": "亚", // yà
+            "見": "见", // jiàn
+            "言": "言", // yán
+            "貝": "贝", // bèi
+            "車": "车", // chē
+            "辵": "绰", // chuò (spesso辶 chuò)
+            "邑": "义", // yì
+            "釆": "变", // biàn
+            "长": "常", // cháng (non zhǎng)
+            "门": "门", // mén
+            "阜": "富", // fù
+            "隶": "力", // lì
+            "隹": "追", // zhuī
+            "页": "叶", // yè
+            "飞": "飞", // fēi
+            "食": "十", // shí
+            "首": "手", // shǒu
+            "马": "马", // mǎ
+            "髟": "标", // biāo
+            "鬥": "豆", // dòu
+            "鬯": "唱", // chàng
+            "鬲": "力", // lì (in questo contesto)
+            "麦": "卖", // mài
+            "黄": "黄", // huáng
+            "黑": "黑", // hēi
+            "黹": "指", // zhǐ
+            "黽": "敏", // mǐn
+            "鼎": "顶", // dǐng
+            "鼓": "古", // gǔ
+            "鼠": "数", // shǔ
+            "鼻": "鼻", // bí
+            "齐": "齐", // qí
+            "齿": "齿", // chǐ
+            "龙": "龙", // lóng
+            "龟": "归", // guī
+            "龠": "月", // yuè
+            "行": "形"  // xíng (non háng in questo contesto)
+        };
+
         // Full Dataset of 214 Kangxi Radicals
         const radicalsData = [
             { id: 1, char: "一", pinyin: "yī", strokes: 1, meaning: "Uno / Orizzontale", examples: ["丁", "七", "万"], desc: "Rappresenta il numero uno o una linea orizzontale." },
@@ -467,6 +571,31 @@
 
         let favorites = JSON.parse(localStorage.getItem('bushou_favorites')) || [1, 9, 30, 32, 61, 75, 85, 86];
         let currentModalRadical = null;
+
+        // Inizializza le Categorie Semantiche Mappate
+        const categoryMapping = {
+            "Numeri e Astrazione": [1, 2, 3, 4, 5, 6, 7, 12, 24, 67, 71, 80, 89, 91, 165, 175],
+            "Corpo Umano e Persone": [9, 10, 30, 37, 38, 39, 41, 44, 55, 61, 64, 65, 73, 74, 82, 83, 87, 88, 125, 128, 130, 131, 132, 135, 139, 147, 158, 176, 181, 185, 188, 190, 209, 211],
+            "Natura e Ambiente": [15, 27, 32, 36, 46, 47, 72, 84, 85, 86, 107, 112, 138, 150, 161, 173, 182, 201, 203],
+            "Animali": [93, 94, 114, 123, 124, 141, 142, 148, 152, 153, 172, 187, 194, 195, 196, 198, 205, 208, 212, 213],
+            "Piante e Agricoltura": [45, 51, 75, 98, 103, 115, 118, 119, 140, 179, 199, 200, 202],
+            "Strumenti e Armi": [18, 21, 22, 23, 48, 56, 57, 62, 68, 69, 79, 102, 109, 110, 111, 121, 122, 127, 129, 134, 151, 164, 167, 192, 193, 206, 207, 214],
+            "Casa, Società e Oggetti": [8, 13, 14, 16, 17, 31, 40, 50, 53, 63, 78, 90, 92, 95, 96, 97, 99, 100, 104, 105, 108, 113, 116, 117, 120, 126, 143, 145, 146, 149, 154, 155, 160, 163, 166, 168, 169, 170, 171, 174, 177, 178, 180, 184, 186, 189, 197, 204],
+            "Azioni e Movimento": [11, 19, 20, 25, 26, 28, 29, 33, 34, 35, 42, 43, 49, 52, 54, 58, 59, 60, 66, 70, 76, 77, 81, 101, 106, 133, 136, 137, 144, 156, 157, 159, 162, 183, 191]
+        };
+
+        // Assegna automaticamente la categoria ad ogni radicale all'avvio
+        radicalsData.forEach(rad => {
+            let found = false;
+            for (const [cat, ids] of Object.entries(categoryMapping)) {
+                if (ids.includes(rad.id)) {
+                    rad.category = cat;
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) rad.category = "Varie";
+        });
 
         // Comprehensive Dictionary for Derived Characters (Pinyin & Meanings)
         const derivedCharsDict = {
@@ -795,6 +924,7 @@
         function filterRadicals() {
             const query = document.getElementById('search-input').value.toLowerCase().trim();
             const strokeVal = document.getElementById('stroke-filter').value;
+            const catVal = document.getElementById('category-filter') ? document.getElementById('category-filter').value : 'all';
 
             const filtered = radicalsData.filter(rad => {
                 const matchQuery = query === '' || 
@@ -805,8 +935,10 @@
 
                 const matchStroke = strokeVal === 'all' || 
                     (strokeVal === '12' ? rad.strokes >= 12 : rad.strokes === parseInt(strokeVal));
+                    
+                const matchCat = catVal === 'all' || rad.category === catVal;
 
-                return matchQuery && matchStroke;
+                return matchQuery && matchStroke && matchCat;
             });
 
             renderRadicals(filtered);
@@ -871,6 +1003,9 @@
             document.getElementById('modal-char').textContent = rad.char;
             document.getElementById('modal-num').textContent = `# ${rad.id}`;
             document.getElementById('modal-strokes').textContent = `${rad.strokes} tratti`;
+            if (document.getElementById('modal-category')) {
+                document.getElementById('modal-category').textContent = rad.category;
+            }
             document.getElementById('modal-meaning').textContent = rad.meaning;
             document.getElementById('modal-pinyin').textContent = rad.pinyin;
             document.getElementById('modal-desc').textContent = rad.desc;
@@ -906,7 +1041,8 @@
         // Speech synthesis for single derived character
         function speakDerivedChar(char, pinyin, meaning) {
             if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(char);
+                const charToSpeak = ttsFixes[char] || char; // Applica il fix se esiste
+                const utterance = new SpeechSynthesisUtterance(charToSpeak);
                 utterance.lang = 'zh-CN';
                 utterance.rate = 0.8;
                 window.speechSynthesis.speak(utterance);
@@ -950,7 +1086,8 @@
         function playAudioSimulation() {
             if (!currentModalRadical) return;
             if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(currentModalRadical.char);
+                const charToSpeak = ttsFixes[currentModalRadical.char] || currentModalRadical.char; // Applica il fix
+                const utterance = new SpeechSynthesisUtterance(charToSpeak);
                 utterance.lang = 'zh-CN';
                 utterance.rate = 0.8;
                 window.speechSynthesis.speak(utterance);
