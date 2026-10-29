@@ -21,7 +21,7 @@ Sviluppata per offrire una leggibilità ottimale sia su desktop sia su dispositi
   - **Pronuncia vocale nativa (Web Speech API):** tocca qualsiasi carattere derivato o radicale per ascoltarne la corretta pronuncia in mandarino (`zh-CN`).
 - **Filtri e Ricerca in Tempo Reale:**
   - Ricerca istantanea per carattere, Pinyin, significato italiano o numero identificativo.
-  - Filtro rapido per **numero di tratti** (da 1 a 17 tratti).
+  - Filtro rapido per **numero di tratti** (da 1 a 17 tratti) e per **categoria**.
 - **Tema Scuro Nativo (Dark Mode):**
   - Configurato di default con una palette ad alto contrasto (`slate-950` / `red-500` / `amber-400`).
   - Toggle rapido chiaro/scuro con salvataggio delle preferenze nel `localStorage`.
